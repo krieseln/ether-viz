@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
+import AccountMenu from './AccountMenu'
+import DrawerMenu from './DrawerMenu'
 import Web3 from "web3";
 
-
+import Canvas from './Canvas'
 import "./App.css";
+import SimpleMenu from "./SimpleMenu";
 
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null};
@@ -75,19 +78,23 @@ class App extends Component {
 
   getTransactions = () => {
       const {web3, contract} = this.state;
-    var event = contract.numberCast({str: "asdf", x: 23})
+      /*var event = contract.numberCast({str: "asdf", x: 23})
 
       web3.eth.getTransaction((error,result) => {
           console.log(result)
-      })
+      })*/
   };
 
   getAccounts = () => {
     const{ web3 } = this.state;
     web3.eth.getAccounts(console.log);
-    }
+    let acc  = web3.eth.getAccounts()
+    return acc;
+    };
 
-
+  getAcc =  () => {
+      return ["0x0064b344b2f7061f0A85d6fceCFC39Bf368D46b8", "0x27Fbd6dF295dF79aD67B7CC9dA0DeeC4288463b5", "0xA8110B9f42B65824eE03e5fD71285dee5DEfeaE6", "0x0d4d6089EFAE3C63a7D646DBdEfD99Dcab5F2F89", "0x7Bcc2A392cB6036b85e16e605B240701CBFf3fEc", "0xa68a961c96e54B1956cED2923408A381511ee497", "0xEd3Ee2c98F1807ae504864243c40D53f34F71EBC", "0x49FF345Fc457c68A3E28F91C311A2319887Ef2eC", "0x317DA75f17Eece417Ce5Da49bf5b5C0d4635b55f", "0xa405462978C4233Bfa586289EF50F2CbAA8F06cA"]
+  }
 
         render() {
       if (!this.state.web3) {
@@ -95,9 +102,11 @@ class App extends Component {
     }
     return (
       <div className="App">
+        <DrawerMenu/>
         <h1>Good to Go!</h1>
         <p>Your Truffle Box is installed and ready.</p>
         <h2>Smart Contract Example</h2>
+          <SimpleMenu/>
         <p>
           If your contracts compiled and migrated successfully, below will show
           a stored value of 5 (by default).
@@ -116,6 +125,8 @@ class App extends Component {
           <p>
               <button id="getAccounts" onClick={this.getAccounts}>Get Accounts</button>
           </p>
+          <Canvas/>
+
       </div>
     );
   }
