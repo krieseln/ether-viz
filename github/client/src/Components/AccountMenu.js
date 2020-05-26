@@ -1,27 +1,10 @@
 import React, { Component } from "react";
 import Menu from "react";
 import MenuItem from "react";
-import App from './App'
+import App from '../App'
 
 export default function AccountMenu() {
 
-
-    /*
-    getMenuAccounts = () => {
-        // const menuAccounts = App.getAccounts;
-        const  menuAccounts = [{name: "john", id: "123"}, {name: "jane", id:"231"}];
-
-        return (
-            <div>
-                {menuAccounts.map(({name, id, ...rest}) => (
-                    <div>
-                        <MenuItem key={name}/>
-                    </div>
-                ))}
-            </div>
-        )
-    };
-*/
     const handleClick = () => {
         console.log("click");
     };

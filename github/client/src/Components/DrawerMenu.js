@@ -21,6 +21,9 @@ const useStyles = makeStyles({
 
 export default function TemporaryDrawer() {
     const classes = useStyles();
+
+    // React.useState ist dafür da, um einen globalen Status zu setzen, ohne eine Klasse schreiben zu müssen.
+    // Damit kann bspw. "this.state.top" in jeder Funktion aufgerufen werden.
     const [state, setState] = React.useState({
         top: false,
         left: false,
