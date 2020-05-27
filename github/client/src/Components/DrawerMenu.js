@@ -39,12 +39,10 @@ export default function DrawerMenu(props) {
     return (
         <div className="menucanvas">
             <Drawer
-                className={classes.drawer}
+                className="menucanvas"
                 variant="permanent"
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
                 anchor="left"
+
             >
                 <div className={classes.toolbar} />
                 <Divider />
