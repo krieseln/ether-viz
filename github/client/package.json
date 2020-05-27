@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "react-router": "^5.2.0",
@@ -30,5 +31,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-lineto": "^3.2.0"
   }
 }
