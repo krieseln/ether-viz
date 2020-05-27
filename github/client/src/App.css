@@ -20,3 +20,43 @@
 .App-link {
   color: #09d3ac;
 }
+
+
+.container{
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas:
+  "menucanvas nodecanvas terminalcanvas"
+  "menucanvas blockchaincanvas terminalcanvas"
+  ;
+}
+
+.menucanvas{
+  left: 0;
+  background-color: lightslategrey;
+  border: 3px solid green;
+  grid-area:  menucanvas;
+}
+
+.terminalcanvas{
+  right:0;
+  background-color: lightblue;
+  border: 3px solid green;
+  grid-area:  terminalcanvas;
+}
+
+.nodecanvas{
+  top: 0;
+  background-color: lightcoral;
+  text-align: center;
+  border: 3px solid green;
+  grid-area:  nodecanvas;
+}
+
+.blockchaincanvas{
+  bottom: 0;
+  background-color: lightgrey;
+  border: 3px solid green;
+  grid-area:  blockchaincanvas;
+}

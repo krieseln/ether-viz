@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
-import AccountMenu from './Components/AccountMenu'
 import DrawerMenu from './Components/DrawerMenu'
 import Web3 from "web3";
 
-import Canvas from './Components/Canvas'
 import "./App.css";
-import SimpleMenu from "./Components/SimpleMenu";
+import NodeCanvas from './Components/NodeCanvas'
+import BlockchainCanvas from "./Components/BlockchainCanvas";
+import TerminalCanvas from "./Components/TerminalCanvas"
+
+import getAccounts from "./Functions/getAccounts";
+import changeValueTo from "./Functions/changeValueTo"
 
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null};
@@ -51,7 +54,7 @@ class App extends Component {
   };
 
 
-  //TESTDURCHLAUF für Contract
+    //TESTDURCHLAUF für Contract
   runExample = async () => {
     const { accounts, contract } = this.state;
 
@@ -71,56 +74,22 @@ class App extends Component {
     this.setState({ storageValue: response });
   };
 
-  setNewNo = async () => {
-      const {accounts, contract} = this.state;
-      let newno = parseInt(document.getElementById("insert_new_nr").value);
-      await contract.methods.set(newno).send({ from: accounts[0] });
-      window.location.reload();
-  }
-
-  getTransactions = () => {
-      const {web3, contract} = this.state;
-      /*var event = contract.numberCast({str: "asdf", x: 23})
-
-      web3.eth.getTransaction((error,result) => {
-          console.log(result)
-      })*/
-  };
-
-  getAccounts = () => {
-      console.log(this.state.accounts);
-      return this.state.accounts;
-  };
-
         render() {
       if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
-      <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 40</strong> of App.js.
-        </p>
-          <div>
-              <input id="insert_new_nr" label="insert text here"/>
-              <button id="setNumber" label="onclick new number" onClick={this.setNewNo}>Set number</button>
-              <div>The stored value is: {this.state.storageValue}</div>
-          </div>
-          <p>
-              <button id="getTransactions" onClick={this.getTransactions}>get transactions</button>
-          </p>
-          <p>
-              <button id="getAccounts" onClick={this.getAccounts}>Get Accounts</button>
-          </p>
-          <Canvas accounts={this.state.accounts}/>
-
+      <div className="App container">
+          <DrawerMenu
+              web3={this.state.web3}
+              accounts={this.state.accounts}
+              contract={this.state.contract}
+              getAccounts={() => getAccounts}
+              changeValueTo={() => changeValueTo}
+          />
+          <NodeCanvas accounts={this.state.accounts}/>
+          <BlockchainCanvas/>
+          <TerminalCanvas/>
       </div>
     );
   }

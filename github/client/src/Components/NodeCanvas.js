@@ -1,16 +1,13 @@
 import React from 'react';
 import LineTo from 'react-lineto';
-import Button from '@material-ui/core/Button'
 import AdjustIcon from '@material-ui/icons/Adjust';
 
 import Contract from "./Contract";
-import DrawerMenu from "./DrawerMenu";
-import SimpleMenu from "./SimpleMenu";
 import Node from './Node';
 
-export default function Canvas(props) {
+export default function NodeCanvas(props) {
 
-const zIndex = -1;
+const zIndex = 1;
 var prevAcc = null;
 
 const setPrevAcc = (item) => {
@@ -25,9 +22,7 @@ const setPrevAcc = (item) => {
 
 
         return (
-            <div>
-                <DrawerMenu/>
-                <SimpleMenu/>
+            <div className="nodecanvas">
                 <div className="accountlist">
                     {props.accounts.map((item, index) => (
                         <Node item={item}/>
