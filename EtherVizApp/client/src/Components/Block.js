@@ -11,8 +11,8 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles({
     table: {
         width: '50%'
-    },
-});
+    }
+})
 
 function createData(attribute, value) {
     return { attribute, value };
