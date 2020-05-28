@@ -1,0 +1,8 @@
+framework für smart-contracts: Truffle
+
+https://wiki.ubuntuusers.de/Node.js/ installierenb für npm
+
+npm install -g truffle // truffle installieren
+
+truffle init in /home/niklas/aps
+
