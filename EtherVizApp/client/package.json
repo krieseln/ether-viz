@@ -9,6 +9,7 @@
     "react-dom": "16.11.0",
     "react-router": "^5.2.0",
     "react-scripts": "^3.4.1",
+    "sha3": "^2.1.2",
     "web3": "1.2.2"
   },
   "scripts": {
