@@ -1,71 +1,68 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+    height: 40vmin;
 }
 
 .App-header {
-  background-color: #09d3ac;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #09d3ac;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #09d3ac;
+    color: #09d3ac;
 }
 
 
-.container{
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
+.container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
 
-  display: grid;
-  grid-template-columns: 15% 70% 15%;
-  grid-template-rows: 50% 50%;
-  grid-template-areas:
-  "menucanvas nodecanvas terminalcanvas"
-  "menucanvas blockchaincanvas terminalcanvas"
-  ;
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas: "menucanvas nodecanvas terminalcanvas" "menucanvas blockchaincanvas terminalcanvas";
 }
 
-.menucanvas{
-  background-color: lightslategrey;
-  border: 3px solid green;
-  grid-area:  menucanvas;
+.menucanvas {
+    background-color: lightslategrey;
+    border: 3px solid green;
+    grid-area: menucanvas;
 }
 
-.terminalcanvas{
+.terminalcanvas {
 
-  background-color: lightblue;
-  border: 3px solid green;
-  grid-area:  terminalcanvas;
+    background-color: lightblue;
+    border: 3px solid green;
+    grid-area: terminalcanvas;
 }
 
-.nodecanvas{
+.nodecanvas {
 
-  background-color: lightcoral;
-  text-align: center;
-  border: 3px solid green;
-  grid-area:  nodecanvas;
+    background-color: lightcoral;
+    text-align: center;
+    border: 3px solid green;
+    grid-area: nodecanvas;
 }
 
-.blockchaincanvas{
-  background-color: lightgrey;
-  border: 3px solid green;
-  grid-area:  blockchaincanvas;
+.blockchaincanvas {
+    background-color: lightgrey;
+    border: 3px solid green;
+    grid-area: blockchaincanvas;
 }
 
-.block{
-  margin: 50px 0 0 20px;
-  display: inline-flex;
+.block {
+    margin: 50px 0 0 20px;
+    display: inline-flex;
 }

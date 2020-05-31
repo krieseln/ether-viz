@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -14,75 +14,108 @@ import TextField from '@material-ui/core/TextField'
 import changeValueTo from "../Functions/changeValueTo";
 import getAccounts from "../Functions/getAccounts";
 
-export default function DrawerMenu(props) {
-    const web3 = props.web3;
-    const accounts = props.accounts;
-    const contract = props.contract;
-    let lastVal = null;
+class DrawerMenu extends React.Component {
 
-    const handleAccountOnClick = () => {
-        getAccounts(props.web3).then(console.log);
+    constructor(props) {
+        super(props);
+        this.state = {
+            web3: props.web3,
+            accounts: props.accounts,
+            contract: props.contract,
+            storageValue: props.storageValue,
+            currentAccount: props.currentAccount,
+            lastValue: null,
+            handleOnAccountClick: props.handleOnAccountClick
+
+        }
     }
 
-    const handleChangeValueClick = () => {
-        changeValueTo(accounts, contract);
-        console.log("set value to:", getLastValue());
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.currentAccount !== this.state.currentAccount){
+            this.setState({currentAccount: this.props.currentAccount});
+        }
     };
 
-    const getLastValue = async () => {
+    handleGetAccounts = () => {
+        getAccounts(this.state.web3).then(console.log);
+    };
+
+    handleChangeValueClick = () => {
+        changeValueTo(this.state.accounts, this.state.contract);
+        console.log("set value to:", this.getLastValue());
+    };
+
+    getLastValue = async () => {
+        const {contract, storageValue} = this.state;
         await contract.methods.get().call()
-            .then(function(result){console.log(result); setValue(result)},
-                function(err){console.log(err);});
+            .then(function (res) {
+                    console.log(res);
+                    this.setState({storageValue: res})
+
+                },
+                function (err) {
+                    console.log(err);
+                });
     };
 
-    const setValue = (res) => {
-        console.log("setValue call with", res);
-        lastVal = res;
-    }
+    render() {
+        const {accounts, currentAccount, storageValue, handleOnAccountClick} = this.state;
 
-
-    return (
-        <div className="menucanvas">
-            <Drawer
-                className="menucanvas"
-                variant="permanent"
-                anchor="left"
-                width="15%"
-            >
-                <div className="drawermenu" />
-                <Divider />
-                <List>
-                    <ListSubheader>Actions</ListSubheader>
-                    <ListItem button key="getAccountsAction" onClick={handleAccountOnClick}>
-                        <ListItemIcon><AccountTreeIcon/></ListItemIcon>
-                        <ListItemText primary="Get Accounts"/>
-                    </ListItem>
-
+        return (
+            <div className="menucanvas">
+                <Drawer
+                    className="menucanvas"
+                    variant="permanent"
+                    anchor="left"
+                    width="15%"
+                >
+                    <div className="drawermenu"/>
                     <Divider/>
-
-                    <ListItem>
-                        <TextField id="changeValueTo" label="Change No"/>
-                    </ListItem>
-                    <ListItem button key="commitChangeValueTo" onClick={handleChangeValueClick}>
-                        <ListItemText primary="Change Value"/>
-                    </ListItem>
-                    <ListItem key="savedValue" >
-                        <ListItemText primary={lastVal}/>
-                    </ListItem>
-
-                </List>
-                <Divider />
-                <List>
-                    <ListSubheader>Accounts</ListSubheader>
-                    {accounts.map((text, index) => (
-                        <Tooltip title={text} arrow>
-                        <ListItem button key={text.substr(text.length - 6, text.length)}>
-                            <ListItemText primary={text.substr(text.length - 6, text.length)} />
+                    <List>
+                        <ListSubheader>Actions</ListSubheader>
+                        <ListItem button key="getAccountsAction" onClick={this.handleGetAccounts}>
+                            <ListItemIcon><AccountTreeIcon/></ListItemIcon>
+                            <ListItemText primary="Get Accounts"/>
                         </ListItem>
-                        </Tooltip>
-                    ))}
-                </List>
-            </Drawer>
-        </div>
-    );
+
+                        <Divider/>
+
+                        <ListItem>
+                            <TextField id="changeValueTo" label="Change No"/>
+                        </ListItem>
+                        <ListItem button key="commitChangeValueTo" onClick={this.handleChangeValueClick}>
+                            <ListItemText primary="Change Value"/>
+                        </ListItem>
+                        <ListItem key="savedValue">
+                            <ListItemText primary={storageValue}/>
+                        </ListItem>
+
+                    </List>
+                    <Divider/>
+                    <List>
+                        <ListSubheader>Accounts</ListSubheader>
+                        <ListItem key="currentAccount">
+                            <ListItemText
+                                primary={currentAccount.substr(currentAccount.length - 6, currentAccount.length)}/>
+                        </ListItem>
+                        <Divider/>
+                        {accounts.map((currentValue, index) => (
+                            <Tooltip title={currentValue} arrow>
+                                <ListItem
+                                    button
+                                    onClick={() => handleOnAccountClick(index)}
+                                    key={currentValue.substr(currentValue.length - 6, currentValue.length)}>
+
+                                    <ListItemText primary={currentValue.substr(currentValue.length - 6, currentValue.length)}/>
+
+                                </ListItem>
+                            </Tooltip>
+                        ))}
+                    </List>
+                </Drawer>
+            </div>
+        );
+    }
 }
+
+export default DrawerMenu;

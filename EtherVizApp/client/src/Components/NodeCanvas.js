@@ -5,47 +5,58 @@ import AdjustIcon from '@material-ui/icons/Adjust';
 import Contract from "./Contract";
 import Node from './Node';
 
-export default function NodeCanvas(props) {
+class NodeCanvas extends React.Component {
 
-const zIndex = 1;
-let prevAcc = null;
+    constructor(props) {
+        super(props);
+        this.state = {
+            accounts: props.accounts,
+            currentAccount: props.currentAccount
+        };
+        const zIndex = 1;
+    };
 
-const setPrevAcc = (item) => {
-    //change to props.accounts[i] and props.accounts[i+1].
-    // When last element, draw line back to props.accounts[0]
-    let from = item;
-    let to = prevAcc;
-    prevAcc = item;
-    return (
-        <LineTo borderColor="black" zIndex={zIndex} from={from} to={to} />
-    );
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.currentAccount !== this.state.currentAccount){
+            this.setState({currentAccount: this.props.currentAccount});
+        }
+    };
 
-};
+    render() {
+        const {currentAccount, accounts, zIndex} = this.state;
 
 
         return (
+
             <div className="nodecanvas">
                 <div className="accountlist">
-                    {props.accounts.map((item, index) => (
-                        <Node item={item}/>
+                    {accounts.map((accountHash, index) => (
+                        <Node
+                            accountHash={accountHash}
+                            currentAccount={currentAccount}
+
+                        />
                     ))}
                 </div>
-                {props.accounts.map((item,index)=> (
-                    setPrevAcc(item)
-                    ))}
+                {accounts.map((item, index) => (
+                    <LineTo borderColor="black" zIndex={zIndex} from={accounts[index]} to={accounts[index - 1]}/>
+                ))}
 
-                <AdjustIcon variant="contained" className="A" >Element A</AdjustIcon>
+                <AdjustIcon variant="contained" className="A">Element A</AdjustIcon>
                 <AdjustIcon variant="contained" className="B">Element B</AdjustIcon>
-                    <p>
-                            <AdjustIcon variant="contained" className="C">Element C</AdjustIcon>
-                    </p>
+                <p>
+                    <AdjustIcon variant="contained" className="C">Element C</AdjustIcon>
+                </p>
 
                 <p>
                     <Contract className="contractA"/>
                 </p>
-                <LineTo borderColor="black" from="A" to="B" />
-                <LineTo zIndex={zIndex} from="C" to="A" />
-                <LineTo zIndex={zIndex} from="B" to="contractA" />
+                <LineTo borderColor="black" from="A" to="B"/>
+                <LineTo zIndex={zIndex} from="C" to="A"/>
+                <LineTo zIndex={zIndex} from="B" to="contractA"/>
             </div>
-        );
-};
+        )
+    };
+}
+
+export default NodeCanvas;
