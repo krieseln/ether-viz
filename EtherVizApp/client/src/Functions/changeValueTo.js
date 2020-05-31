@@ -2,10 +2,12 @@ import React from 'react';
 
 export default async function changeValueTo(accounts, contract) {
 
-    let newno = parseInt(document.getElementById("changeValueTo").value);
+    let newno = document.getElementById("changeValueTo").value;
     if(newno != null){
-        await contract.methods.set(newno).send({ from: accounts[0]});
-        window.location.reload();
+        console.log("changedValueto", newno)
+        await contract.methods.set(parseInt(newno)).send({ from: accounts[0]});
+    } else {
+        console.log("value is null");
     };
 
 };

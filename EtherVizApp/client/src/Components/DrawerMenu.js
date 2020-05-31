@@ -11,30 +11,35 @@ import Tooltip from "@material-ui/core/Tooltip";
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import TextField from '@material-ui/core/TextField'
 
-
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    }
-}));
+import changeValueTo from "../Functions/changeValueTo";
+import getAccounts from "../Functions/getAccounts";
 
 export default function DrawerMenu(props) {
-    const classes = useStyles();
+    const web3 = props.web3;
     const accounts = props.accounts;
     const contract = props.contract;
-    const getAccounts = props.getAccounts;
-    const changeValueTo = props.changeValueTo;
-    const lastValue = contract.methods.get().call();
+    let lastVal = null;
+
+    const handleAccountOnClick = () => {
+        getAccounts(props.web3).then(console.log);
+    }
+
+    const handleChangeValueClick = () => {
+        changeValueTo(accounts, contract);
+        console.log("set value to:", getLastValue());
+    };
+
+    const getLastValue = async () => {
+        await contract.methods.get().call()
+            .then(function(result){console.log(result); setValue(result)},
+                function(err){console.log(err);});
+    };
+
+    const setValue = (res) => {
+        console.log("setValue call with", res);
+        lastVal = res;
+    }
+
 
     return (
         <div className="menucanvas">
@@ -42,13 +47,13 @@ export default function DrawerMenu(props) {
                 className="menucanvas"
                 variant="permanent"
                 anchor="left"
-
+                width="15%"
             >
-                <div className={classes.toolbar} />
+                <div className="drawermenu" />
                 <Divider />
                 <List>
                     <ListSubheader>Actions</ListSubheader>
-                    <ListItem button key="getAccountsAction" onClick={getAccounts(props.web3)}>
+                    <ListItem button key="getAccountsAction" onClick={handleAccountOnClick}>
                         <ListItemIcon><AccountTreeIcon/></ListItemIcon>
                         <ListItemText primary="Get Accounts"/>
                     </ListItem>
@@ -58,11 +63,11 @@ export default function DrawerMenu(props) {
                     <ListItem>
                         <TextField id="changeValueTo" label="Change No"/>
                     </ListItem>
-                    <ListItem button key="commitChangeValueTo" onClick={changeValueTo(accounts, contract)}>
+                    <ListItem button key="commitChangeValueTo" onClick={handleChangeValueClick}>
                         <ListItemText primary="Change Value"/>
                     </ListItem>
-                    <ListItem key="savedValue">
-                        <ListItemText primary="123fake" />
+                    <ListItem key="savedValue" >
+                        <ListItemText primary={lastVal}/>
                     </ListItem>
 
                 </List>

@@ -8,9 +8,11 @@ import Node from './Node';
 export default function NodeCanvas(props) {
 
 const zIndex = 1;
-var prevAcc = null;
+let prevAcc = null;
 
 const setPrevAcc = (item) => {
+    //change to props.accounts[i] and props.accounts[i+1].
+    // When last element, draw line back to props.accounts[0]
     let from = item;
     let to = prevAcc;
     prevAcc = item;

@@ -13,7 +13,8 @@ import getAccounts from "./Functions/getAccounts";
 import changeValueTo from "./Functions/changeValueTo"
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null};
+
+    state = {storageValue: 0, web3: null, accounts: null, contract: null};
 
   componentDidMount = async () => {
     try {
@@ -84,8 +85,6 @@ class App extends Component {
               web3={this.state.web3}
               accounts={this.state.accounts}
               contract={this.state.contract}
-              getAccounts={() => getAccounts}
-              changeValueTo={() => changeValueTo}
           />
           <NodeCanvas accounts={this.state.accounts}/>
           <BlockchainCanvas/>

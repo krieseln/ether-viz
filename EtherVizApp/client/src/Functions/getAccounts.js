@@ -1,6 +1,5 @@
 import React from 'react';
 
-export default function getAccounts(web3){
-    const accounts = web3.eth.getAccounts();
-    return accounts;
+export default async function getAccounts(web3){
+     return await web3.eth.getAccounts();
 }
