@@ -1,6 +1,5 @@
 const path = require("path");
-const HDWalletProvider = require("./client/node_modules/@truffle/hdwallet-provider");
-const MetaMaskMnemonic = "exotic arch fetch gospel buyer month useless false improve pill empty rack";
+
 
 module.exports = {
     // See <http://truffleframework.com/docs/advanced/configuration>
@@ -10,12 +9,12 @@ module.exports = {
         develop: {
             port: 8545
         },
-        ropsten: {
-            network_id: 3,
+        local_net: {
+            network_id: 1337,
             host: '127.0.0.1',
             port: 8545,
             gas: 4000000,
-            from: "0x49a3e37d06e7590db7318572253ce38293a3c4b5"
+            from: "0x3590aca93338b0721966a8d0c96ebf2c4c87c544"
         }
     }
 };
