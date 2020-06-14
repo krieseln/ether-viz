@@ -26,6 +26,8 @@ const rows = [
     createData('NONCE', 0o1)
 ];
 
+// @todo --> use data from './Functions/getBlock.js'
+
 export default function DenseTable() {
     const classes = useStyles();
 

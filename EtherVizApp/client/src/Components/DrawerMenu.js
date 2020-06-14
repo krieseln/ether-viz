@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField'
 
 import changeValueTo from "../Functions/changeValueTo";
 import getAccounts from "../Functions/getAccounts";
+import getBlock from "../Functions/getBlock";
 
 class DrawerMenu extends React.Component {
 
@@ -40,9 +41,12 @@ class DrawerMenu extends React.Component {
         getAccounts(this.state.web3).then(console.log);
     };
 
+    handleGetBlock = () => {
+        getBlock(this.state.web3);
+    }
+
     handleChangeValueClick = () => {
         changeValueTo(this.state.accounts, this.state.contract);
-        console.log("set value to:", this.getLastValue());
     };
 
     getLastValue = async () => {
@@ -77,7 +81,10 @@ class DrawerMenu extends React.Component {
                             <ListItemIcon><AccountTreeIcon/></ListItemIcon>
                             <ListItemText primary="Get Accounts"/>
                         </ListItem>
-
+                        <ListItem button key="getAccountsAction" onClick={this.handleGetBlock}>
+                            <ListItemIcon><AccountTreeIcon/></ListItemIcon>
+                            <ListItemText primary="Get Block"/>
+                        </ListItem>
                         <Divider/>
 
                         <ListItem>

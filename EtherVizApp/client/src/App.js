@@ -1,30 +1,52 @@
 import React, {Component} from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
-import getWeb3 from "./getWeb3";
+
 
 import Web3 from "web3";
+import {Debug} from 'web3-eth-debug';
 
 import "./App.css";
 import DrawerMenu from './Components/DrawerMenu'
 import NodeCanvas from './Components/NodeCanvas'
 import BlockchainCanvas from "./Components/BlockchainCanvas";
-import TerminalCanvas from "./Components/TerminalCanvas"
-
+import TerminalCanvas from "./Components/TerminalCanvas";
+import getNodeInfo from './Functions/getNodeInfo';
+import renderInfoBlock from './Components/TerminalCanvas';
+import getBlock from './Functions/getBlock';
 
 
 class App extends Component {
 
-    state = {storageValue: 0, web3: null, accounts: null, contract: null, currentAccount: null};
+    constructor(props) {
+        super(props);
+        this.state ={
+            storageValue: 0,
+            web3: null,
+            debug: null,
+            accounts: null,
+            contract: null,
+            currentAccount: null,
+            networkId: null,
+            deployedNetwork: null
+        }
+    }
 
     componentDidMount = async () => {
         try {
             // Get network provider and web3 instance.
             // --> Browser-Fenster wird gebaut
-            const provider = new Web3.providers.HttpProvider(
+
+
+            const devNodeProvider = new Web3.providers.HttpProvider(
                 "http://127.0.0.1:8545"
             );
-            const web3 = new Web3(provider);
 
+
+
+            const nodes = [];
+
+            const web3 = new Web3(devNodeProvider);
+            nodes.push(web3);
             // Use web3 to get the user's accounts.
             // --> User-Account wird abgerufen #1
             const accounts = await web3.eth.getAccounts();
@@ -43,9 +65,18 @@ class App extends Component {
                 deployedNetwork && deployedNetwork.address,
             );
 
+            // @todo--> set address the contract calls. Is set to account for now
+            instance.options.address = accounts[0];
+
             // Set web3, accounts, and contract to the state, and then proceed with an
             // example of interacting with the contract's methods.
-            this.setState({web3, accounts, contract: instance, currentAccount: currentAccount}, this.runExample);
+            this.setState({web3,
+                accounts,
+                contract: instance,
+                currentAccount: currentAccount,
+                networkId: networkId,
+                deployedNetwork: deployedNetwork,
+                }, this.runExample);
         } catch (error) {
             // Catch any errors for any of the above operations.
             alert(
@@ -72,8 +103,12 @@ class App extends Component {
         // Get the value from the contract to prove it worked.
         const response = await contract.methods.get().call();
 
+
+        //nodeinfo
+        const nodeinfo = await this.state.web3.eth.getNodeInfo();
+
         // Update state with the result.
-        this.setState({storageValue: response});
+        this.setState({storageValue: response, nodeinfo: nodeinfo});
     };
 
     handleOnAccountClick = (props) => {
@@ -81,7 +116,14 @@ class App extends Component {
         console.log(this.state.currentAccount)
     };
 
+    getNodeInfo = (account) => {
+        getNodeInfo(this.state.web3, account);
+    };
+
+
+
     render() {
+        const {storageValue, web3, accounts, contract, currentAccount, nodeinfo} = this.state;
         if (!this.state.web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
@@ -94,12 +136,23 @@ class App extends Component {
                     storageValue={this.state.storageValue}
                     currentAccount={this.state.currentAccount}
                     handleOnAccountClick={this.handleOnAccountClick}
-                />
+
+            />
                 <NodeCanvas
                     accounts={this.state.accounts}
-                    currentAccount={this.state.currentAccount}/>
+                    currentAccount={this.state.currentAccount}
+                    getNodeInfo={this.getNodeInfo}
+                    contract={this.state.contract}
+                />
                 <BlockchainCanvas/>
-                <TerminalCanvas/>
+                <TerminalCanvas
+                    storageValue={storageValue}
+                    web3={web3}
+                    accounts= {accounts}
+                    contract={contract}
+                    currentAccount={currentAccount}
+                    nodeinfo={nodeinfo}
+                />
             </div>
         );
     }

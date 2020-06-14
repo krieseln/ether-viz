@@ -6,6 +6,7 @@ export default async function changeValueTo(accounts, contract) {
     if(newno != null){
         console.log("changedValueto", newno)
         await contract.methods.set(parseInt(newno)).send({from: accounts[0]});
+        await contract.methods.get()
     } else {
         console.log("value is null");
     };

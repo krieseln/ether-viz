@@ -1,9 +1,7 @@
 import React from 'react';
 import LineTo from 'react-lineto';
-import AdjustIcon from '@material-ui/icons/Adjust';
-
-import Contract from "./Contract";
 import Node from './Node';
+import Contract from './Contract';
 
 class NodeCanvas extends React.Component {
 
@@ -34,26 +32,18 @@ class NodeCanvas extends React.Component {
                         <Node
                             accountHash={accountHash}
                             currentAccount={currentAccount}
-
+                            getNodeInfo={this.props.getNodeInfo}
                         />
                     ))}
+                </div>
+                <div className="contractList">
+                    <Contract
+                        contract={this.props.contract}
+                    />
                 </div>
                 {accounts.map((item, index) => (
                     <LineTo borderColor="black" zIndex={zIndex} from={accounts[index]} to={accounts[index - 1]}/>
                 ))}
-
-                <AdjustIcon variant="contained" className="A">Element A</AdjustIcon>
-                <AdjustIcon variant="contained" className="B">Element B</AdjustIcon>
-                <p>
-                    <AdjustIcon variant="contained" className="C">Element C</AdjustIcon>
-                </p>
-
-                <p>
-                    <Contract className="contractA"/>
-                </p>
-                <LineTo borderColor="black" from="A" to="B"/>
-                <LineTo zIndex={zIndex} from="C" to="A"/>
-                <LineTo zIndex={zIndex} from="B" to="contractA"/>
             </div>
         )
     };
