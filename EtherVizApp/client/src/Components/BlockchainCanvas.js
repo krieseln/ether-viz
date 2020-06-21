@@ -1,5 +1,6 @@
 import React from 'react';
 import Block from "./Block";
+import LineTo from "react-lineto";
 
 
 class BlockchainCanvas extends React.Component {
@@ -25,21 +26,19 @@ class BlockchainCanvas extends React.Component {
     getLastBlocks = async () => {
         const {web3} = this.state;
 
-        const latestBlock = await web3.eth.getBlockNumber();
+        let latestBlock = await web3.eth.getBlockNumber();
         console.log("latestBlock", latestBlock);
         let blocksAway = 0;
-        if (latestBlock <= 5) {
+        if (latestBlock <= 4) {
             blocksAway = latestBlock;
         } else {
-            blocksAway = 5;
+            blocksAway = 4;
         }
 
         const b = [];
 
-        for (let i = latestBlock; i <= blocksAway; i++) {
-
-            const callBlock = await web3.eth.getBlock(i);
-
+        for (let i = 0; i <= blocksAway; i++) {
+            const callBlock = await web3.eth.getBlock(latestBlock - i);
             b.push(callBlock);
             console.log("callBlock", callBlock)
         }
@@ -63,6 +62,7 @@ class BlockchainCanvas extends React.Component {
         const {blocks} = this.state;
 
         return (
+
             <div className="blockchaincanvas">
                 {
                     blocks.map(block => <Block blockInfo={block}/>)

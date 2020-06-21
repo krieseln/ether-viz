@@ -27,9 +27,9 @@ class Block extends React.Component {
 
         return (
             //@todo add blockno as className
-            <div style={{width: "50%"}} className="blockidchangethis" id={blockInfo.number}>
+            <div style={{width: "20%", float: "left", padding: "10px"}} className={"container_" + blockInfo.hash} id={blockInfo.number}>
 
-                <TableContainer component={Paper}>
+                <TableContainer id={blockInfo.hash} component={Paper}>
                     <Table className="blockTable" size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
@@ -45,7 +45,9 @@ class Block extends React.Component {
 
                             <TableRow key="Blockhash">
                                 <TableCell align="left">{"Blockhash"}</TableCell>
-                                <TableCell align="right">{blockInfo.hash.substr(0, 8) + "..."}</TableCell>
+                                <Tooltip title={blockInfo.hash}>
+                                    <TableCell align="right">{blockInfo.hash.substr(0, 8) + "..."}</TableCell>
+                                </Tooltip>
                             </TableRow>
 
                             <TableRow key="Blockname">
