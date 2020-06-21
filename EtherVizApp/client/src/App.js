@@ -154,7 +154,7 @@ class App extends Component {
         }
         return (
             <div className="App container">
-                 <DrawerMenu
+                <DrawerMenu
                     web3={this.state.web3}
                     accounts={this.state.accounts}
                     contract={this.state.contract}
@@ -165,7 +165,9 @@ class App extends Component {
                 />
                 <SendMenu
                     accounts={this.state.accounts}
-                />
+                    handleOnAccountClick={this.handleOnAccountClick}
+
+            />
                 <NodeCanvas
                     accounts={this.state.accounts}
                     currentAccount={this.state.currentAccount}

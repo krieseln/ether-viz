@@ -22,7 +22,7 @@ class BlockchainCanvas extends React.Component {
         );
     };
 
-    //get last 5 blöcke
+    //get last 5 blocks
     getLastBlocks = async () => {
         const {web3} = this.state;
 
