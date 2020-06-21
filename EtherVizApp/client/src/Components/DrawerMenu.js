@@ -111,7 +111,7 @@ class DrawerMenu extends React.Component {
                                 <ListItem
                                     button
                                     onClick={() => handleOnAccountClick(index)}
-                                    key={currentValue.substr(currentValue.length - 6, currentValue.length)}>
+                                    key={currentValue.substr(currentValue.length - 6, currentValue.length) + "_" + index}>
 
                                     <ListItemText primary={currentValue.substr(currentValue.length - 6, currentValue.length)}/>
 

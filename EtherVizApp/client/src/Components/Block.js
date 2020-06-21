@@ -16,18 +16,23 @@ class Block extends React.Component {
         super(props);
         this.state = {
             web3: props.web3,
-            blockInfo: props.blockInfo
+            blockInfo: props.blockInfo,
+            pendingBlock: props.pendingBlock
 
         };
 
     }
 
     render() {
-        const {blockInfo} = this.state;
+        const {blockInfo, pendingBlock} = this.state;
+        console.log("blockInfo", blockInfo);
+        console.log("pendingBlock", pendingBlock);
+
+        const pendingFlag = (blockInfo.hash === pendingBlock.hash) ? "grey" : "white";
 
         return (
             //@todo add blockno as className
-            <div style={{width: "20%", float: "left", padding: "10px"}} className={"container_" + blockInfo.hash} id={blockInfo.number}>
+            <div style={{width: "20%", float: "left", padding: "10px", color: {pendingFlag}}} className={"container_" + blockInfo.hash} id={blockInfo.number}>
 
                 <TableContainer id={blockInfo.hash} component={Paper}>
                     <Table className="blockTable" size="small" aria-label="a dense table">
