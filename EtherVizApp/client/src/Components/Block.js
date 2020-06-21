@@ -8,6 +8,19 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+class Block extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            web3: this.props.web3,
+
+        }
+
+    }
+
+
+}
+
 const useStyles = makeStyles({
     table: {
         width: '50%'

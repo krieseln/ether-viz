@@ -1,9 +1,7 @@
 import React, {Component} from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 
-
 import Web3 from "web3";
-import {Debug} from 'web3-eth-debug';
 
 import "./App.css";
 import DrawerMenu from './Components/DrawerMenu'
@@ -19,7 +17,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state ={
+        this.state = {
             storageValue: 0,
             web3: null,
             debug: null,
@@ -27,7 +25,8 @@ class App extends Component {
             contract: null,
             currentAccount: null,
             networkId: null,
-            deployedNetwork: null
+            deployedNetwork: null,
+            nodes: null
         }
     }
 
@@ -41,15 +40,39 @@ class App extends Component {
                 "http://127.0.0.1:8545"
             );
 
+            const miner1Provider = new Web3.providers.HttpProvider(
+                "http://127.0.0.1:8546"
+            );
+            const miner2Provider = new Web3.providers.HttpProvider(
+                "http://127.0.0.1:8547"
+            );
 
 
             const nodes = [];
+            const allAccounts = [];
 
             const web3 = new Web3(devNodeProvider);
+            const miner1 = new Web3(miner1Provider);
+            const miner2 = new Web3(miner2Provider);
+
             nodes.push(web3);
+            nodes.push(miner1);
+            nodes.push(miner2);
+
+
+            for (let node of nodes) {
+                allAccounts.push(await node.eth.getAccounts());
+            }
+            console.log(allAccounts);
+
             // Use web3 to get the user's accounts.
             // --> User-Account wird abgerufen #1
-            const accounts = await web3.eth.getAccounts();
+            const accounts = [];
+
+            for(let acc of allAccounts){
+                accounts.push(acc[0]);
+            }
+
             const currentAccount = accounts[0];
 
             // Get the contract instance.
@@ -70,13 +93,15 @@ class App extends Component {
 
             // Set web3, accounts, and contract to the state, and then proceed with an
             // example of interacting with the contract's methods.
-            this.setState({web3,
-                accounts,
+            this.setState({
+                web3,
+                accounts: accounts,
                 contract: instance,
                 currentAccount: currentAccount,
                 networkId: networkId,
                 deployedNetwork: deployedNetwork,
-                }, this.runExample);
+                nodes: nodes
+            }, this.runExample);
         } catch (error) {
             // Catch any errors for any of the above operations.
             alert(
@@ -121,9 +146,8 @@ class App extends Component {
     };
 
 
-
     render() {
-        const {storageValue, web3, accounts, contract, currentAccount, nodeinfo} = this.state;
+        const {storageValue, web3, accounts, contract, currentAccount,nodeinfo, nodes} = this.state;
         if (!this.state.web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
@@ -137,18 +161,21 @@ class App extends Component {
                     currentAccount={this.state.currentAccount}
                     handleOnAccountClick={this.handleOnAccountClick}
 
-            />
+                />
                 <NodeCanvas
                     accounts={this.state.accounts}
                     currentAccount={this.state.currentAccount}
                     getNodeInfo={this.getNodeInfo}
                     contract={this.state.contract}
+                    nodes={this.state.nodes}
                 />
-                <BlockchainCanvas/>
+                <BlockchainCanvas
+                    web3={this.state.web3}
+                />
                 <TerminalCanvas
                     storageValue={storageValue}
                     web3={web3}
-                    accounts= {accounts}
+                    accounts={accounts}
                     contract={contract}
                     currentAccount={currentAccount}
                     nodeinfo={nodeinfo}
