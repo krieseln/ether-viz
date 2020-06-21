@@ -9,11 +9,14 @@ class BlockchainCanvas extends React.Component {
             web3: props.web3,
             blocks: []
         };
+
+        this.getLastBlocksTicker();
     }
+
 
     getLastBlocksTicker = () => {
         window.setInterval(
-            this.getLastBlocks,
+            this.getLastBlocks(),
             15000
         );
     };
@@ -23,14 +26,17 @@ class BlockchainCanvas extends React.Component {
         const {web3} = this.state;
 
         const latestBlock = await web3.eth.getBlockNumber();
+        console.log("latestBlock", latestBlock);
         let blocksAway = 0;
-        if (latestBlock >= 5) {
+        if (latestBlock <= 5) {
             blocksAway = latestBlock;
-        } else {blocksAway = 5;}
+        } else {
+            blocksAway = 5;
+        }
 
         const b = [];
 
-        for (let i = 0; i <= blocksAway; i++) {
+        for (let i = latestBlock; i <= blocksAway; i++) {
 
             const callBlock = await web3.eth.getBlock(i);
 
@@ -54,11 +60,13 @@ class BlockchainCanvas extends React.Component {
 
     render() {
 
-        const blockInfo = this.localGetBlock();
+        const {blocks} = this.state;
 
         return (
             <div className="blockchaincanvas">
-                <Block blockInfo={blockInfo}/>
+                {
+                    blocks.map(block => <Block blockInfo={block}/>)
+                }
             </div>
         )
 
