@@ -23,16 +23,16 @@ class Contract extends React.Component {
     };
 
     getContractInfo = () => {
-        console.log(
+     /*   console.log(
             this.props.contract.options
-        )
+        )*/
 
     };
 
     showContractMethods = () => {
-        console.log(
+    /*    console.log(
             this.props.contract.options.jsonInterface
-        )
+        )*/
 
     };
 

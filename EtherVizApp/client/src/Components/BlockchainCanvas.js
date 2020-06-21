@@ -1,6 +1,8 @@
 import React from 'react';
 import Block from "./Block";
 import LineTo from "react-lineto";
+import * as _ from "underscore";
+import BlockSubscription from "./BlockSubscription"
 
 
 class BlockchainCanvas extends React.Component {
@@ -8,6 +10,7 @@ class BlockchainCanvas extends React.Component {
         super(props);
         this.state = {
             web3: props.web3,
+            web3WS: props.web3WS,
             blocks: []
         };
 
@@ -40,14 +43,14 @@ class BlockchainCanvas extends React.Component {
         for (let i = 0; i <= blocksAway; i++) {
             const callBlock = await web3.eth.getBlock(latestBlock - i);
             b.push(callBlock);
-            console.log("callBlock", callBlock)
+        /*    console.log("callBlock", callBlock)*/
         }
 
         this.setState({
                 blocks: b
             }
         );
-        console.log(b);
+       /* console.log(b);*/
     };
 
 
@@ -59,14 +62,19 @@ class BlockchainCanvas extends React.Component {
 
     render() {
 
-        const {blocks} = this.state;
+        const {blocks, web3WS} = this.state;
+
 
         return (
-
-            <div className="blockchaincanvas">
-                {
-                    blocks.map(block => <Block blockInfo={block}/>)
-                }
+            <div>
+                <div>
+                    <BlockSubscription web3WS={web3WS}/>
+                </div>
+                <div className="blockchaincanvas">
+                    {
+                        blocks.map(block => <Block blockInfo={block}/>)
+                    }
+                </div>
             </div>
         )
 

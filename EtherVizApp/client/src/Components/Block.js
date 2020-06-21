@@ -38,19 +38,19 @@ class Block extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow key="Blockname">
+                            <TableRow key={this.state.blockInfo.number}>
                                 <TableCell align="left">{"Blockname"}</TableCell>
                                 <TableCell align="right">{blockInfo.number}</TableCell>
                             </TableRow>
 
-                            <TableRow key="Blockhash">
+                            <TableRow key={this.state.blockInfo.hash}>
                                 <TableCell align="left">{"Blockhash"}</TableCell>
                                 <Tooltip title={blockInfo.hash}>
                                     <TableCell align="right">{blockInfo.hash.substr(0, 8) + "..."}</TableCell>
                                 </Tooltip>
                             </TableRow>
 
-                            <TableRow key="Blockname">
+                            <TableRow key={this.state.blockInfo.parentHash}>
                                 <TableCell align="left">{"parent hash"}</TableCell>
                                 <Tooltip title={blockInfo.parentHash}>
                                     <TableCell align="right">{blockInfo.parentHash.substr(0, 8) + "..."}</TableCell>
@@ -58,7 +58,7 @@ class Block extends React.Component {
 
                             </TableRow>
 
-                            <TableRow key="Blockname">
+                            <TableRow key={this.state.blockInfo.gasLimit}>
                                 <TableCell align="left">{"GasLimit"}</TableCell>
                                 <TableCell align="right">{blockInfo.gasLimit}</TableCell>
                             </TableRow>

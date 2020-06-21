@@ -20,6 +20,7 @@ class App extends Component {
         this.state = {
             storageValue: 0,
             web3: null,
+            web3WS: null,
             debug: null,
             accounts: null,
             contract: null,
@@ -34,24 +35,53 @@ class App extends Component {
         try {
             // Get network provider and web3 instance.
             // --> Browser-Fenster wird gebaut
+            const options = {
+                timeout: 30000, // ms
 
+                headers: {
+                    Connection: 'upgrade',
+                    Upgrade: 'websocket'
+                },
 
+                clientConfig: {
+                    // Useful if requests are large
+                    maxReceivedFrameSize: 100000000,   // bytes - default: 1MiB
+                    maxReceivedMessageSize: 100000000, // bytes - default: 8MiB
+
+                    // Useful to keep a connection alive
+                    keepalive: true,
+                    keepaliveInterval: 60000 // ms
+                },
+
+                // Enable auto reconnection
+                reconnect: {
+                    auto: true,
+                    delay: 5000, // ms
+                    maxAttempts: 5,
+                    onTimeout: false
+                }
+            };
             const devNodeProvider = new Web3.providers.HttpProvider(
                 "http://127.0.0.1:8545"
             );
 
+            const devNodeProviderWS = new Web3.providers.WebsocketProvider(
+                "ws://127.0.0.1:8546", options
+            );
+
             const miner1Provider = new Web3.providers.HttpProvider(
-                "http://127.0.0.1:8546"
+                "http://127.0.0.1:8547"
             );
             const miner2Provider = new Web3.providers.HttpProvider(
-                "http://127.0.0.1:8547"
+                "http://127.0.0.1:8549"
             );
 
 
             const nodes = [];
             const allAccounts = [];
 
-            const web3 = new Web3(devNodeProvider);
+            const web3 = new Web3(devNodeProvider)
+            const web3WS = new Web3(devNodeProviderWS);
             const miner1 = new Web3(miner1Provider);
             const miner2 = new Web3(miner2Provider);
 
@@ -63,7 +93,9 @@ class App extends Component {
             for (let node of nodes) {
                 allAccounts.push(await node.eth.getAccounts());
             }
+/*
             console.log(allAccounts);
+*/
 
             // Use web3 to get the user's accounts.
             // --> User-Account wird abgerufen #1
@@ -95,6 +127,7 @@ class App extends Component {
             // example of interacting with the contract's methods.
             this.setState({
                 web3,
+                web3WS: web3WS,
                 accounts: accounts,
                 contract: instance,
                 currentAccount: currentAccount,
@@ -138,7 +171,9 @@ class App extends Component {
 
     handleOnAccountClick = (props) => {
         this.setState({currentAccount: this.state.accounts[props]})
+/*
         console.log(this.state.currentAccount)
+*/
     };
 
     getNodeInfo = (account) => {
@@ -147,7 +182,7 @@ class App extends Component {
 
 
     render() {
-        const {storageValue, web3, accounts, contract, currentAccount,nodeinfo, nodes} = this.state;
+        const {storageValue, web3, accounts, contract, currentAccount,nodeinfo, web3WS} = this.state;
         if (!this.state.web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
@@ -171,6 +206,7 @@ class App extends Component {
                 />
                 <BlockchainCanvas
                     web3={this.state.web3}
+                    web3WS={this.state.web3WS}
                 />
                 <TerminalCanvas
                     storageValue={storageValue}
