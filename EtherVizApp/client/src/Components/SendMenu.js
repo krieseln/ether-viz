@@ -28,10 +28,10 @@ class SendMenu extends React.Component {
             <List>
                 <ListSubheader>send ETH</ListSubheader>
                 <ListItem>
-                    <ListItemText id="send-from-account" primary="From:"/>
                     <FormControl>
                         <InputLabel htmlFor="from-selection">From</InputLabel>
                         <NativeSelect id="send-from-account-dropdown">
+                            <option/>
                             {accounts.map((accountHash, index) => (
                                 <option value={accountHash}>{accountHash}</option>
                             ))}
@@ -39,10 +39,10 @@ class SendMenu extends React.Component {
                     </FormControl>
                 </ListItem>
                 <ListItem>
-                    <ListItemText id="send-to-account" primary="From:"/>
                     <FormControl>
-                        <InputLabel htmlFor="to-selection">From</InputLabel>
+                        <InputLabel htmlFor="to-selection">To</InputLabel>
                         <NativeSelect id="send-to-account-dropdown">
+                            <option/>
                             {accounts.map((accountHash, index) => (
                                 <option value={accountHash}>{accountHash}</option>
                             ))}
@@ -50,7 +50,7 @@ class SendMenu extends React.Component {
                     </FormControl>
                 </ListItem>
                 <ListItem>
-                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                    <TextField id="outlined-basic" label="ETH amount" variant="outlined" />
                 </ListItem>
             </List>
         </div>
