@@ -11,6 +11,7 @@ import TerminalCanvas from "./Components/TerminalCanvas";
 import getNodeInfo from './Functions/getNodeInfo';
 import renderInfoBlock from './Components/TerminalCanvas';
 import getBlock from './Functions/getBlock';
+import SendMenu from "./Components/SendMenu";
 
 
 class App extends Component {
@@ -161,6 +162,9 @@ class App extends Component {
                     currentAccount={this.state.currentAccount}
                     handleOnAccountClick={this.handleOnAccountClick}
 
+                />
+                <SendMenu
+                    accounts={this.state.accounts}
                 />
                 <NodeCanvas
                     accounts={this.state.accounts}
