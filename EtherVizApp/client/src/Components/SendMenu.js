@@ -52,7 +52,7 @@ class SendMenu extends React.Component {
                     </FormControl>
                 </ListItem>
                 <ListItem>
-                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic" label="Filled" variant="filled" />
+                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic" label="ETH amount" variant="filled" />
                 </ListItem>
                 <ListItem>
                     <Button style={{width: "100%"}} variant="contained">Send</Button>

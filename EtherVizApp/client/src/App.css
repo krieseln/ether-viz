@@ -31,8 +31,12 @@
 
     display: grid;
     grid-template-columns: 15% 70% 15%;
-    grid-template-rows: 50% 50%;
-    grid-template-areas: "menucanvas nodecanvas terminalcanvas" "sendmenucanvas blockchaincanvas infocanvas";
+    grid-template-rows: 30% 20% 50%;
+    grid-template-areas:
+            "menucanvas nodecanvas infocanvas"
+            "menucanvas nodecanvas infocanvas"
+            "sendmenucanvas blockchaincanvas terminalcanvas"
+            ;
 }
 
 .menucanvas {
@@ -55,7 +59,7 @@
 }
 
 .infocanvas {
-    background-color: aqua;
+    background-color: lime;
     border: 3px solid green;
     grid-area: infocanvas;
 }
