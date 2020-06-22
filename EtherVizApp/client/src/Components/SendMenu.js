@@ -20,6 +20,9 @@ class SendMenu extends React.Component {
         }
     }
 
+    //@ToDo from account selected source account should be greyed out in the scond drop down menu
+    //@ToDo text field should only be able to hold numbers and a dot (letters and further points are not allowed)
+    //@ToDo send button should execute the transaction
 
     render() {
         const {accounts, handleOnAccountClick} = this.state;

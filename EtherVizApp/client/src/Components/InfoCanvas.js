@@ -13,7 +13,8 @@ class InfoCanvas extends React.Component {
     }
 
     //functions here
-
+    //@ToDo once an account is selected in menu canvas: highlight node in node canvas
+    //@Todo once an account is selected in menu canvas: insert account information into text fields
 
 
     render() {

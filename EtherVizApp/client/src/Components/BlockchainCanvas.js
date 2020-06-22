@@ -14,6 +14,7 @@ class BlockchainCanvas extends React.Component {
         this.getLastBlocksTicker();
     }
 
+    //@ToDo add lines between blocks: line from /"block hash" to /"parent block hash"
 
     getLastBlocksTicker = () => {
         window.setInterval(
