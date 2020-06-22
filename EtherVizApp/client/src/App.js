@@ -2,13 +2,10 @@ import React, {Component} from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import Web3 from "web3";
 import "./App.css";
-import DrawerMenu from './Components/DrawerMenu'
 import NodeCanvas from './Components/NodeCanvas'
 import BlockchainCanvas from "./Components/BlockchainCanvas";
 import TerminalCanvas from "./Components/TerminalCanvas";
 import getNodeInfo from './Functions/getNodeInfo';
-import renderInfoBlock from './Components/TerminalCanvas';
-import getBlock from './Functions/getBlock';
 import SendMenu from "./Components/SendMenu";
 import MenuCanvas from "./Components/MenuCanvas";
 import InfoCanvas from "./Components/InfoCanvas";

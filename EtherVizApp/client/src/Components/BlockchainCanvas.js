@@ -1,6 +1,6 @@
 import React from 'react';
 import Block from "./Block";
-import LineTo from "react-lineto";
+
 
 
 class BlockchainCanvas extends React.Component {
