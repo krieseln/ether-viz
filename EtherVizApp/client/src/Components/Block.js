@@ -7,7 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from "@material-ui/core/Tooltip";
-import LineTo from "react-lineto";
 
 
 class Block extends React.Component {
@@ -34,10 +33,9 @@ class Block extends React.Component {
         const zIndex = -1;
 
         return (
-            //@todo add blockno as className
                 <div style={{width: "22%", float: "left", margin: "10px"}} className={"container_" + blockInfo.hash}
                      title={blockInfo.number}>
-                    <TableContainer className={blockInfo.hash} component={Paper} style={{background: flagIsLatestBlock}}>
+                    <TableContainer  component={Paper} style={{background: flagIsLatestBlock}}>
                         <Table className="blockTable" size="small" aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
@@ -51,14 +49,14 @@ class Block extends React.Component {
                                     <TableCell align="right">{blockInfo.number}</TableCell>
                                 </TableRow>
 
-                                <TableRow key="blockhash">
+                                <TableRow className={"hash_" + blockInfo.hash} key="blockhash">
                                     <TableCell align="left">{"Blockhash"}</TableCell>
                                     <Tooltip title={blockInfo.hash}>
                                         <TableCell align="right">{blockInfo.hash.substr(0, 8) + "..."}</TableCell>
                                     </Tooltip>
                                 </TableRow>
 
-                                <TableRow key="parenthash">
+                                <TableRow className={"parenthash_" + blockInfo.parentHash} key="parenthash">
                                     <TableCell align="left">{"parent hash"}</TableCell>
                                     <Tooltip title={blockInfo.parentHash}>
                                         <TableCell align="right">{blockInfo.parentHash.substr(0, 8) + "..."}</TableCell>

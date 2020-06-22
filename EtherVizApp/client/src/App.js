@@ -62,15 +62,20 @@ class App extends Component {
             for (let node of nodes) {
                 allAccounts.push(await node.eth.getAccounts());
             }
-            console.log(allAccounts);
+            console.log("all accounts of all nodes:", allAccounts);
 
             // Use web3 to get the user's accounts.
             // --> User-Account wird abgerufen #1
             const accounts = [];
 
-            for(let acc of allAccounts){
-                accounts.push(acc[0]);
+            for (let acc of allAccounts) {
+                for (let i = 0; i <= acc.length; i++) {
+                    if (acc[i] != null && acc[i] != undefined)
+                        accounts.push(acc[i]);
+                }
             }
+
+            console.log("all accounts array", accounts)
 
             const currentAccount = accounts[0];
 
@@ -146,7 +151,7 @@ class App extends Component {
 
 
     render() {
-        const {storageValue, web3, accounts, contract, currentAccount,nodeinfo, nodes} = this.state;
+        const {storageValue, web3, accounts, contract, currentAccount, nodeinfo, nodes} = this.state;
         if (!this.state.web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
@@ -169,6 +174,7 @@ class App extends Component {
                     handleOnAccountClick={this.handleOnAccountClick}
                 />
                 <SendMenu
+                    web3={this.state.web3}
                     accounts={this.state.accounts}
                     handleOnAccountClick={this.handleOnAccountClick}
 

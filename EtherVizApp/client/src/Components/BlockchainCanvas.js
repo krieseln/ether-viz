@@ -1,6 +1,6 @@
 import React from 'react';
 import Block from "./Block";
-import LineTo from 'react-lineto';
+import SteppedLineTo from 'react-lineto';
 
 
 class BlockchainCanvas extends React.Component {
@@ -43,7 +43,7 @@ class BlockchainCanvas extends React.Component {
             blockArray.push(callBlock);
         }
         this.setState({blocks: blockArray, blockHashes: blockHashesArray});
-        console.log(this.state.blocks);
+        //console.log(this.state.blocks);
     };
 
 
@@ -57,7 +57,8 @@ class BlockchainCanvas extends React.Component {
                 </div>
                 <div className="blocklines">
                     {blocks.map((block, index) => (
-                        <LineTo borderColor={"black"} from={block.hash} to={block.parentHash} zIndex={zIndex}/>
+                        <SteppedLineTo id="steppedlineto" borderColor={"black"} from={"hash_" + block.parentHash}
+                                       to={"parenthash_" + block.hash} zIndex={zIndex}/>
                     ))}
                 </div>
             </div>
