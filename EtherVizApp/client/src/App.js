@@ -44,10 +44,10 @@ class App extends Component {
             );
 
             const miner1Provider = new Web3.providers.HttpProvider(
-                "http://127.0.0.1:8546"
+                "http://127.0.0.1:8547"
             );
             const miner2Provider = new Web3.providers.HttpProvider(
-                "http://127.0.0.1:8547"
+                "http://127.0.0.1:8549"
             );
 
 
