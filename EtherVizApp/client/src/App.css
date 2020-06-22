@@ -21,7 +21,6 @@
     color: #09d3ac;
 }
 
-
 .container {
     position: fixed;
     width: 100%;
@@ -33,9 +32,7 @@
     grid-template-columns: 15% 70% 15%;
     grid-template-rows: 60% 40%;
     grid-template-areas: "menucanvas nodecanvas infocanvas"
-                         "sendmenucanvas blockchaincanvas terminalcanvas"
-                         "sendmenucanvas blockchaincanvas terminalcanvas"
-
+                         "sendmenucanvas blockchaincanvas miningpoolcanvas"
 }
 
 .menucanvas {
@@ -50,12 +47,12 @@
     grid-area: sendmenucanvas;
 }
 
-.terminalcanvas {
+{/*.terminalcanvas {
     background-color: lightblue;
     border: 3px solid green;
     grid-area: terminalcanvas;
 }
-
+*/}
 .infocanvas {
     background-color: lime;
     border: 3px solid green;
@@ -73,6 +70,12 @@
     background-color: lightgrey;
     border: 3px solid green;
     grid-area: blockchaincanvas;
+}
+
+.miningpoolcanvas {
+    background-color: lightgrey;
+    border: 3px solid green;
+    grid-area: miningpoolcanvas;
 }
 
 .block {

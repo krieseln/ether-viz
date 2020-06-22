@@ -9,6 +9,7 @@ import getNodeInfo from './Functions/getNodeInfo';
 import SendMenu from "./Components/SendMenu";
 import MenuCanvas from "./Components/MenuCanvas";
 import InfoCanvas from "./Components/InfoCanvas";
+import MiningPoolCanvas from "./Components/MiningPoolCanvas";
 
 
 class App extends Component {
@@ -182,14 +183,16 @@ class App extends Component {
                 <BlockchainCanvas
                     web3={this.state.web3}
                 />
-                <TerminalCanvas
+                <MiningPoolCanvas
+                    />
+                {/*<TerminalCanvas
                     storageValue={storageValue}
                     web3={web3}
                     accounts={accounts}
                     contract={contract}
                     currentAccount={currentAccount}
                     nodeinfo={nodeinfo}
-                />
+                />*/}
                 <InfoCanvas
                     web3={this.state.web3}
                     accounts={this.state.accounts}
