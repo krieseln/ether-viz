@@ -39,7 +39,7 @@
     "size": 200,
     "strokeColor": "none",
     "strokeWidth": 1.5,
-    "svg": "Ethereum_logo.svg",
+    "svg": "./Components/Ethereum_logo.svg",
     "symbolType": "circle"
   },
   "link": {

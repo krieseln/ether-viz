@@ -5,11 +5,14 @@ import "./App.css";
 import NodeCanvas from './Components/NodeCanvas'
 import BlockchainCanvas from "./Components/BlockchainCanvas";
 import TerminalCanvas from "./Components/TerminalCanvas";
-import getNodeInfo from './Functions/getNodeInfo';
+import getAccountInfo from './Functions/getAccountInfo';
 import SendMenu from "./Components/SendMenu";
 import MenuCanvas from "./Components/MenuCanvas";
 import InfoCanvas from "./Components/InfoCanvas";
 import MiningPoolCanvas from "./Components/MiningPoolCanvas";
+import GraphCanvas from "./Components/GraphCanvas";
+
+import createNodeCanvasData from "./Functions/createNodeCanvasData";
 
 
 class App extends Component {
@@ -25,7 +28,8 @@ class App extends Component {
             currentAccount: null,
             networkId: null,
             deployedNetwork: null,
-            nodes: null
+            nodes: null,
+            nodeConvasData: null
         }
     }
 
@@ -48,33 +52,34 @@ class App extends Component {
 
 
             const nodes = [];
-            const allAccounts = [];
+            const accountsPerNode = [];
 
             const web3 = new Web3(devNodeProvider);
             const miner1 = new Web3(miner1Provider);
             const miner2 = new Web3(miner2Provider);
 
-            nodes.push(web3);
-            nodes.push(miner1);
-            nodes.push(miner2);
+            nodes.push({"name": "geth", "instance": web3});
+            nodes.push({"name": "miner1", "instance": miner1});
+            nodes.push({"name": "miner2", "instance": miner2});
 
 
             for (let node of nodes) {
-                allAccounts.push(await node.eth.getAccounts());
+                accountsPerNode.push({"name": node.name, "accounts": await node.instance.eth.getAccounts()});
             }
-            console.log("all accounts of all nodes:", allAccounts);
+            console.log("all accounts of all nodes:", accountsPerNode);
 
             // Use web3 to get the user's accounts.
             // --> User-Account wird abgerufen #1
             const accounts = [];
 
-            for (let acc of allAccounts) {
-                for (let i = 0; i <= acc.length; i++) {
-                    if (acc[i] != null && acc[i] != undefined)
-                        accounts.push(acc[i]);
+            for (let acc of accountsPerNode) {
+                for (let i = 0; i <= acc.accounts.length; i++) {
+                    if (acc.accounts[i] != null && acc.accounts[i] != undefined)
+                        accounts.push(acc.accounts[i]);
                 }
             }
 
+            console.log("all nodes with accounts:", nodes)
             console.log("all accounts array", accounts)
 
             const currentAccount = accounts[0];
@@ -95,6 +100,9 @@ class App extends Component {
             // @todo--> set address the contract calls. Is set to account for now
             instance.options.address = accounts[0];
 
+            const nodeCanvasData = createNodeCanvasData(nodes, accountsPerNode, instance);
+            console.log("app.js nodecanvasdata", nodeCanvasData);
+
             // Set web3, accounts, and contract to the state, and then proceed with an
             // example of interacting with the contract's methods.
             this.setState({
@@ -104,7 +112,8 @@ class App extends Component {
                 currentAccount: currentAccount,
                 networkId: networkId,
                 deployedNetwork: deployedNetwork,
-                nodes: nodes
+                nodes: nodes,
+                nodeCanvasData: nodeCanvasData
             }, this.runExample);
         } catch (error) {
             // Catch any errors for any of the above operations.
@@ -146,12 +155,12 @@ class App extends Component {
     };
 
     getNodeInfo = (account) => {
-        getNodeInfo(this.state.web3, account);
+        getAccountInfo(this.state.web3, account);
     };
 
 
     render() {
-        const {storageValue, web3, accounts, contract, currentAccount, nodeinfo, nodes} = this.state;
+        const {storageValue, web3, accounts, contract, currentAccount, nodeinfo, nodes, nodeCanvasData} = this.state;
         if (!this.state.web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
@@ -179,6 +188,10 @@ class App extends Component {
                     handleOnAccountClick={this.handleOnAccountClick}
 
                 />
+                <GraphCanvas
+                    data = {this.state.nodeCanvasData}
+                />
+                 {/*
                 <NodeCanvas
                     accounts={this.state.accounts}
                     currentAccount={this.state.currentAccount}
@@ -186,6 +199,7 @@ class App extends Component {
                     contract={this.state.contract}
                     nodes={this.state.nodes}
                 />
+                */}
                 <BlockchainCanvas
                     web3={this.state.web3}
                 />

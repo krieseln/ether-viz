@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default async function getNodeInfo(web3, account) {
+export default async function getAccountInfo(web3, account) {
     const nodeInfo = await web3.eth.getNodeInfo();
     const currentProvider = await web3.eth.personal.currentProvider;
     const balance = await web3.eth.getBalance(account);
@@ -9,7 +9,7 @@ export default async function getNodeInfo(web3, account) {
     const peerCount = await web3.eth.net.getPeerCount();
     const networkType = await web3.eth.net.getNetworkType();
 
-    console.log(
+    return(
         {
             nodeInfo, currentProvider, balance,
             "network": {

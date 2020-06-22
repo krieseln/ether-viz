@@ -31,8 +31,15 @@
     display: grid;
     grid-template-columns: 15% 70% 15%;
     grid-template-rows: 60% 40%;
-    grid-template-areas: "menucanvas nodecanvas infocanvas"
+    grid-template-areas: "menucanvas graphcanvas infocanvas"
                          "sendmenucanvas blockchaincanvas miningpoolcanvas"
+}
+
+
+.graphcanvas {
+    background-color: lightslategrey;
+    border: 3px solid green;
+    grid-area: graphcanvas;
 }
 
 .menucanvas {
