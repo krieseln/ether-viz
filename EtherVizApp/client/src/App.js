@@ -39,28 +39,41 @@ class App extends Component {
             // --> Browser-Fenster wird gebaut
 
 
-            const devNodeProvider = new Web3.providers.HttpProvider(
+            const node1Provider = new Web3.providers.HttpProvider(
                 "http://127.0.0.1:8545"
             );
 
-            const miner1Provider = new Web3.providers.HttpProvider(
+            const node2Provider = new Web3.providers.HttpProvider(
                 "http://127.0.0.1:8547"
             );
-            const miner2Provider = new Web3.providers.HttpProvider(
+
+            const miner1Provider = new Web3.providers.HttpProvider(
                 "http://127.0.0.1:8549"
+            );
+
+            const miner2Provider = new Web3.providers.HttpProvider(
+                "http://127.0.0.1:8551"
+            );
+
+            const miner3Provider = new Web3.providers.HttpProvider(
+                "http://127.0.0.1:8553"
             );
 
 
             const nodes = [];
             const accountsPerNode = [];
 
-            const web3 = new Web3(devNodeProvider);
+            const web3 = new Web3(node1Provider);
+            const node2 = new Web3(node2Provider);
             const miner1 = new Web3(miner1Provider);
             const miner2 = new Web3(miner2Provider);
+            const miner3 = new Web3(miner3Provider);
 
             nodes.push({"name": "geth", "instance": web3});
+            nodes.push({"name": "node1", "instance": node2});
             nodes.push({"name": "miner1", "instance": miner1});
             nodes.push({"name": "miner2", "instance": miner2});
+            nodes.push({"name": "miner3", "instance": miner3});
 
 
             for (let node of nodes) {
