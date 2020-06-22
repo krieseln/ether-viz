@@ -1,5 +1,4 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -10,7 +9,6 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import Tooltip from "@material-ui/core/Tooltip";
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import TextField from '@material-ui/core/TextField'
-
 import changeValueTo from "../Functions/changeValueTo";
 import getAccounts from "../Functions/getAccounts";
 import getBlock from "../Functions/getBlock";
@@ -107,6 +105,7 @@ class DrawerMenu extends React.Component {
                         </ListItem>
                         <Divider/>
                         {accounts.map((currentValue, index) => (
+
                             <Tooltip title={currentValue} arrow>
                                 <ListItem
                                     button

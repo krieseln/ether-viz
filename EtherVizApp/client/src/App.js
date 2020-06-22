@@ -1,16 +1,14 @@
 import React, {Component} from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
-
 import Web3 from "web3";
-
 import "./App.css";
-import DrawerMenu from './Components/DrawerMenu'
 import NodeCanvas from './Components/NodeCanvas'
 import BlockchainCanvas from "./Components/BlockchainCanvas";
 import TerminalCanvas from "./Components/TerminalCanvas";
 import getNodeInfo from './Functions/getNodeInfo';
-import renderInfoBlock from './Components/TerminalCanvas';
-import getBlock from './Functions/getBlock';
+import SendMenu from "./Components/SendMenu";
+import MenuCanvas from "./Components/MenuCanvas";
+import InfoCanvas from "./Components/InfoCanvas";
 
 
 class App extends Component {
@@ -153,12 +151,24 @@ class App extends Component {
         }
         return (
             <div className="App container">
-                <DrawerMenu
+                {/*<DrawerMenu
                     web3={this.state.web3}
                     accounts={this.state.accounts}
                     contract={this.state.contract}
                     storageValue={this.state.storageValue}
                     currentAccount={this.state.currentAccount}
+                    handleOnAccountClick={this.handleOnAccountClick}
+
+                />*/}
+                <MenuCanvas
+                    web3={this.state.web3}
+                    accounts={this.state.accounts}
+                    contract={this.state.contract}
+                    currentAccount={this.state.currentAccount}
+                    handleOnAccountClick={this.handleOnAccountClick}
+                />
+                <SendMenu
+                    accounts={this.state.accounts}
                     handleOnAccountClick={this.handleOnAccountClick}
 
                 />
@@ -179,6 +189,11 @@ class App extends Component {
                     contract={contract}
                     currentAccount={currentAccount}
                     nodeinfo={nodeinfo}
+                />
+                <InfoCanvas
+                    web3={this.state.web3}
+                    accounts={this.state.accounts}
+                    contract={this.state.contract}
                 />
             </div>
         );

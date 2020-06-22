@@ -22,6 +22,7 @@ class NodeCanvas extends React.Component {
         }
     };
 
+
     render() {
         const {currentAccount, accounts, zIndex, nodes} = this.state;
 

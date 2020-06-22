@@ -3,7 +3,6 @@ import AdjustIcon from '@material-ui/icons/Adjust';
 import Tooltip from "@material-ui/core/Tooltip";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import Button from "@material-ui/core/Button";
 
 
 class Node extends React.Component {

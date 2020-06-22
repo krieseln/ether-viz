@@ -31,8 +31,9 @@
 
     display: grid;
     grid-template-columns: 15% 70% 15%;
-    grid-template-rows: 50% 50%;
-    grid-template-areas: "menucanvas nodecanvas terminalcanvas" "menucanvas blockchaincanvas terminalcanvas";
+    grid-template-rows: 60% 40%;
+    grid-template-areas: "menucanvas nodecanvas infocanvas"
+                         "sendmenucanvas blockchaincanvas terminalcanvas"
 }
 
 .menucanvas {
@@ -41,15 +42,25 @@
     grid-area: menucanvas;
 }
 
-.terminalcanvas {
+.sendmenucanvas {
+    background-color: antiquewhite;
+    border: 3px solid green;
+    grid-area: sendmenucanvas;
+}
 
+.terminalcanvas {
     background-color: lightblue;
     border: 3px solid green;
     grid-area: terminalcanvas;
 }
 
-.nodecanvas {
+.infocanvas {
+    background-color: lime;
+    border: 3px solid green;
+    grid-area: infocanvas;
+}
 
+.nodecanvas {
     background-color: lightcoral;
     text-align: center;
     border: 3px solid green;

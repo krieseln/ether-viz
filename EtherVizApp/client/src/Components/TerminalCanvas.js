@@ -26,7 +26,7 @@ objectMap = (obj, fn) => {
         return (
             <div className="terminalcanvas">
                 <p>
-                    web3: {this.objectMap(this.state.web3, v => v.toString())}
+                    {/*web3: {this.objectMap(this.state.web3, v => v.toString())}*/}
                 </p>
                 <p>
                     accounts: {this.state.accounts.toString()}
