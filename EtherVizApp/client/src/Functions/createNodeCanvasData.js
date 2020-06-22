@@ -1,4 +1,5 @@
 import nodeLogo from '../Components/Ethereum_logo.svg'
+import accountLogo from '../Components/Private-Key-Icon.svg'
 
 export default function createNodeCanvasData(tempNodes, tempAccounts, tempContracts) {
 
@@ -28,7 +29,7 @@ export default function createNodeCanvasData(tempNodes, tempAccounts, tempContra
             nodes.push({
                 id: tempAccounts[i].accounts[accountIter],
                 symbolType: "account",
-                svg: nodeLogo
+                svg: accountLogo
             });
 
             links.push({
