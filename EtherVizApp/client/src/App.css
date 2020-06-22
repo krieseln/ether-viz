@@ -34,6 +34,8 @@
     grid-template-rows: 60% 40%;
     grid-template-areas: "menucanvas nodecanvas infocanvas"
                          "sendmenucanvas blockchaincanvas terminalcanvas"
+                         "sendmenucanvas blockchaincanvas terminalcanvas"
+
 }
 
 .menucanvas {

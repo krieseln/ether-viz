@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from "@material-ui/core/Tooltip";
+import LineTo from "react-lineto";
 
 
 class Block extends React.Component {
@@ -16,60 +17,63 @@ class Block extends React.Component {
         this.state = {
             web3: props.web3,
             blockInfo: props.blockInfo,
-            pendingBlock: props.pendingBlock
-
+            latestBlockNumber: props.latestBlockNumber
         };
-
     }
 
-    render() {
-        const {blockInfo, pendingBlock} = this.state;
-        console.log("blockInfo", blockInfo);
-        console.log("pendingBlock", pendingBlock);
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.blockInfo !== this.state.blockInfo) {
+            this.setState({blockInfo: this.props.blockInfo, latestBlockNumber: this.props.latestBlockNumber});
+        }
+    };
 
-        const pendingFlag = (blockInfo.hash === pendingBlock.hash) ? "grey" : "white";
+    render() {
+        const {blockInfo, latestBlockNumber} = this.state;
+
+        const flagIsLatestBlock = (blockInfo.number == latestBlockNumber) ? "#dedede" : "white";
+        const zIndex = -1;
 
         return (
             //@todo add blockno as className
-            <div style={{width: "20%", float: "left", padding: "10px", color: {pendingFlag}}} className={"container_" + blockInfo.hash} id={blockInfo.number}>
+                <div style={{width: "22%", float: "left", margin: "10px"}} className={"container_" + blockInfo.hash}
+                     title={blockInfo.number}>
+                    <TableContainer className={blockInfo.hash} component={Paper} style={{background: flagIsLatestBlock}}>
+                        <Table className="blockTable" size="small" aria-label="a dense table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="left">Attribute</TableCell>
+                                    <TableCell align="right">Value</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow key="blockname">
+                                    <TableCell align="left">{"Blockname"}</TableCell>
+                                    <TableCell align="right">{blockInfo.number}</TableCell>
+                                </TableRow>
 
-                <TableContainer id={blockInfo.hash} component={Paper}>
-                    <Table className="blockTable" size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="left">Attribute</TableCell>
-                                <TableCell align="right">Value</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow key="Blockname">
-                                <TableCell align="left">{"Blockname"}</TableCell>
-                                <TableCell align="right">{blockInfo.number}</TableCell>
-                            </TableRow>
+                                <TableRow key="blockhash">
+                                    <TableCell align="left">{"Blockhash"}</TableCell>
+                                    <Tooltip title={blockInfo.hash}>
+                                        <TableCell align="right">{blockInfo.hash.substr(0, 8) + "..."}</TableCell>
+                                    </Tooltip>
+                                </TableRow>
 
-                            <TableRow key="Blockhash">
-                                <TableCell align="left">{"Blockhash"}</TableCell>
-                                <Tooltip title={blockInfo.hash}>
-                                    <TableCell align="right">{blockInfo.hash.substr(0, 8) + "..."}</TableCell>
-                                </Tooltip>
-                            </TableRow>
+                                <TableRow key="parenthash">
+                                    <TableCell align="left">{"parent hash"}</TableCell>
+                                    <Tooltip title={blockInfo.parentHash}>
+                                        <TableCell align="right">{blockInfo.parentHash.substr(0, 8) + "..."}</TableCell>
+                                    </Tooltip>
 
-                            <TableRow key="Blockname">
-                                <TableCell align="left">{"parent hash"}</TableCell>
-                                <Tooltip title={blockInfo.parentHash}>
-                                    <TableCell align="right">{blockInfo.parentHash.substr(0, 8) + "..."}</TableCell>
-                                </Tooltip>
+                                </TableRow>
 
-                            </TableRow>
-
-                            <TableRow key="Blockname">
-                                <TableCell align="left">{"GasLimit"}</TableCell>
-                                <TableCell align="right">{blockInfo.gasLimit}</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
+                                <TableRow key="gaslimit">
+                                    <TableCell align="left">{"GasLimit"}</TableCell>
+                                    <TableCell align="right">{blockInfo.gasLimit}</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
         )
     }
 

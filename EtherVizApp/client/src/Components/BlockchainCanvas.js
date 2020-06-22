@@ -1,6 +1,6 @@
 import React from 'react';
 import Block from "./Block";
-
+import LineTo from 'react-lineto';
 
 
 class BlockchainCanvas extends React.Component {
@@ -8,6 +8,7 @@ class BlockchainCanvas extends React.Component {
         super(props);
         this.state = {
             web3: props.web3,
+            latestBlockNumber: null,
             blocks: []
         };
 
@@ -18,8 +19,8 @@ class BlockchainCanvas extends React.Component {
 
     getLastBlocksTicker = () => {
         window.setInterval(
-            this.getLastBlocks(),
-            15000
+            () => this.getLastBlocks(),
+            4000
         );
     };
 
@@ -28,52 +29,40 @@ class BlockchainCanvas extends React.Component {
         const {web3} = this.state;
 
         let latestBlock = await web3.eth.getBlockNumber();
-        console.log("latestBlock", latestBlock);
+        this.setState({latestBlockNumber: latestBlock})
         let blocksAway = 0;
-        if (latestBlock <= 4) {
+        if (latestBlock <= 3) {
             blocksAway = latestBlock;
         } else {
-            blocksAway = 4;
+            blocksAway = 3;
         }
-
-        const b = [];
-
+        const blockArray = [];
+        const blockHashesArray = [];
         for (let i = 0; i <= blocksAway; i++) {
             const callBlock = await web3.eth.getBlock(latestBlock - i);
-            b.push(callBlock);
-            console.log("callBlock", callBlock)
+            blockArray.push(callBlock);
         }
-
-        this.setState({
-                blocks: b
-            }
-        );
-        console.log(b);
+        this.setState({blocks: blockArray, blockHashes: blockHashesArray});
+        console.log(this.state.blocks);
     };
 
 
-    localGetBlock = () => {
-        const {web3} = this.state;
-        return web3.eth.getBlock(0);
-    }
-
-
     render() {
-
-        const {blocks} = this.state;
-
+        const {blocks, latestBlockNumber} = this.state;
+        const zIndex = -1;
         return (
-
-            <div className="blockchaincanvas">
-                {
-                    blocks.map(block => <Block blockInfo={block}/>)
-                }
+            <div>
+                <div className="blockchaincanvas">
+                    {blocks.map(block => (<Block blockInfo={block} latestBlockNumber={latestBlockNumber}/>))}
+                </div>
+                <div className="blocklines">
+                    {blocks.map((block, index) => (
+                        <LineTo borderColor={"black"} from={block.hash} to={block.parentHash} zIndex={zIndex}/>
+                    ))}
+                </div>
             </div>
         )
-
     }
-
-
 }
 
 export default BlockchainCanvas;
