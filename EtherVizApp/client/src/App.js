@@ -182,7 +182,7 @@ class App extends Component {
 
 
     render() {
-        const {storageValue, web3, accounts, contract, currentAccount,nodeinfo, web3WS} = this.state;
+        const {storageValue, web3, accounts, contract, currentAccount, nodeinfo, web3WS} = this.state;
         if (!this.state.web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
