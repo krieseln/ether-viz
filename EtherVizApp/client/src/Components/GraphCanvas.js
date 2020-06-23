@@ -30,7 +30,7 @@ class GraphCanvas extends React.Component {
             "directed": false,
             "focusAnimationDuration": 0.75,
             "focusZoom": 1,
-            "height": 600,
+            "height": '',
             "highlightDegree": 1,
             "highlightOpacity": 1,
             "linkHighlightBehavior": true,
@@ -40,11 +40,11 @@ class GraphCanvas extends React.Component {
             "panAndZoom": false,
             "staticGraph": false,
             "staticGraphWithDragAndDrop": false,
-            "width": 1000,
+            "width": '',
             "d3": {
                 "alphaTarget": 0.05,
-                "gravity": -100,
-                "linkLength": 100,
+                "gravity": -50,
+                "linkLength": 200,
                 "linkStrength": 1,
                 "disableLinkForce": false
             },

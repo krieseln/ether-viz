@@ -44,6 +44,8 @@ class InfoCanvas extends React.Component {
         await web3.eth.getBalance(currentAccount, function (error, wei) {
             if (!error) {
                 accountBalance = web3.utils.fromWei(wei, 'ether');
+                console.log(wei)
+                console.log(accountBalance)
             }
         });
 
