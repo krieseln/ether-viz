@@ -20,7 +20,6 @@ class BlockchainCanvas extends React.Component {
         if(this.props.web3 !== this.state.web3){
             this.setState({web3: this.props.web3});
         }
-        console.log("web3 in BlockChainCanvas", this.state.web3._provider.host)
     };
     //@ToDo add lines between blocks: line from /"block hash" to /"parent block hash"
 

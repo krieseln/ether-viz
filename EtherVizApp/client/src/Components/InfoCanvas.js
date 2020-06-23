@@ -31,16 +31,19 @@ class InfoCanvas extends React.Component {
     }
 
 
-    //function to collect all relevant infos
-
+    //function to collect account infos
     getCurrentAccountInfo = async () => {
-
         const {web3, currentAccount} = this.state;
 
         let tmpcurrentAccountInfo = [];
 
-        let  transactionCount = await web3.eth.getTransactionCount(currentAccount);
+        let transactionCount = await web3.eth.getTransactionCount(currentAccount);
         let accountBalance = null;
+        let storageAT = null;
+
+        await web3.eth.getStorageAt(currentAccount, 0).then(result => {
+            storageAT = web3.utils.hexToAscii(result);
+        });
         await web3.eth.getBalance(currentAccount, function (error, wei) {
             if (!error) {
                 accountBalance = web3.utils.fromWei(wei, 'ether');
@@ -48,11 +51,14 @@ class InfoCanvas extends React.Component {
                 console.log(accountBalance)
             }
         });
+        let contractCode = await web3.eth.getCode(currentAccount);
 
 
 
         tmpcurrentAccountInfo.push(accountBalance)
         tmpcurrentAccountInfo.push(transactionCount)
+        tmpcurrentAccountInfo.push(contractCode)
+        tmpcurrentAccountInfo.push(storageAT)
 
         this.setState({
             currentAccountInfo: tmpcurrentAccountInfo

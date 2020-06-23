@@ -16,11 +16,10 @@ class TransactionFeed extends React.Component{
     };
 
     render(){
-        console.log(this.state.selectedNode);
 
         return(
             <div className="transactionfeed" id="transactionfeed">
-                <p>returns all transactions of node {this.state.selectedNode.name}</p>
+                <p>node: {this.state.selectedNode.name} on {this.state.selectedNode.instance._provider.host} </p>
             </div>
         )
 
