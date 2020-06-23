@@ -87,7 +87,7 @@ class App extends Component {
 
             for (let acc of accountsPerNode) {
                 for (let i = 0; i <= acc.accounts.length; i++) {
-                    if (acc.accounts[i] != null && acc.accounts[i] != undefined)
+                    if (acc.accounts[i] != null && acc.accounts[i] !== undefined)
                         accounts.push(acc.accounts[i]);
                 }
             }

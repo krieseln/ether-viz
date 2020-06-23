@@ -27,7 +27,7 @@ class Node extends React.Component {
     isSelectedAccount = () => {
         const {accountHash, currentAccount} = this.state;
 
-        if (accountHash == currentAccount) {
+        if (accountHash === currentAccount) {
             return "primary"
         } else {
             return "disabled"
@@ -77,6 +77,6 @@ class Node extends React.Component {
             </div>
         )
     }
-};
+}
 
 export default Node;

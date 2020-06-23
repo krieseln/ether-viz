@@ -3,18 +3,6 @@ import accountLogo from '../Components/Private-Key-Icon.svg'
 
 export default function createNodeCanvasData(tempNodes, tempAccounts, tempContracts, tempCurrentAccount) {
 
-    const tempData = {
-        nodes: [{id: "geth", symbolType: "node", svg: nodeLogo},
-            {id: "miner", symbolType: "node"},
-            {id: "0x123...", symbolType: "account"},
-            {id: "0x321...", symbolType: "contract"}
-        ],
-        links: [{source: "geth", target: "0x123..."},
-            {source: "0x123...", target: "0x321..."}
-        ],
-    };
-
-
     let nodes = [];
     let links = [];
 
@@ -23,7 +11,7 @@ export default function createNodeCanvasData(tempNodes, tempAccounts, tempContra
 
         for (let accountIter = 0; accountIter < tempAccounts[i].accounts.length; accountIter++) {
 
-            if(tempAccounts[i].accounts[accountIter] == tempCurrentAccount){
+            if(tempAccounts[i].accounts[accountIter] === tempCurrentAccount){
                 nodes.push({
                     id: tempAccounts[i].accounts[accountIter],
                     symbolType: "account",

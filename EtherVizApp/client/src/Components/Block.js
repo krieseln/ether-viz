@@ -29,7 +29,7 @@ class Block extends React.Component {
     render() {
         const {blockInfo, latestBlockNumber} = this.state;
 
-        const flagIsLatestBlock = (blockInfo.number == latestBlockNumber) ? "#dedede" : "white";
+        const flagIsLatestBlock = (blockInfo.number === latestBlockNumber) ? "#dedede" : "white";
         const zIndex = -1;
 
         return (

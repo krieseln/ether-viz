@@ -9,6 +9,6 @@ export default async function changeValueTo(accounts, contract) {
         await contract.methods.get()
     } else {
         console.log("value is null");
-    };
+    }
 
 };
