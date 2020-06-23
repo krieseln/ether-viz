@@ -24,8 +24,18 @@ class SendMenu extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.web3 !== this.state.web3){
+            this.setState({web3: this.props.web3,
+            accounts: this.props.accounts
+            });
+        }
+        console.log("SendMenu componentDidUpdate", this.state.web3._provider.host);
+    };
+
     handleSendClick = () => {
         const {web3, from, to, amount} = this.state;
+        console.log("handleSendClick", web3._provider);
         sendEthereum(web3, from, to, amount);
         console.log("handleSendClick", from, to, amount);
     };

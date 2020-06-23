@@ -32,7 +32,9 @@ class App extends Component {
             deployedNetwork: null,
             nodes: null,
             nodeConvasData: null,
-            selectedNode: null
+            selectedNode: null,
+            selectedNodeAccounts: null,
+            accountsPerNode: null
         }
     }
 
@@ -44,6 +46,10 @@ class App extends Component {
 
             const node1Provider = new Web3.providers.HttpProvider(
                 "http://127.0.0.1:8545"
+            );
+
+            const node1ProviderWS = new Web3.providers.WebsocketProvider(
+                "ws://127.0.0.1:8546"
             );
 
             const node2Provider = new Web3.providers.HttpProvider(
@@ -67,26 +73,29 @@ class App extends Component {
             const accountsPerNode = [];
 
             const web3 = new Web3(node1Provider);
+            const node1 = new Web3(node1ProviderWS);
             const node2 = new Web3(node2Provider);
             const miner1 = new Web3(miner1Provider);
             const miner2 = new Web3(miner2Provider);
             const miner3 = new Web3(miner3Provider);
 
             nodes.push({"name": "geth", "instance": web3});
-            nodes.push({"name": "node1", "instance": node2});
+            nodes.push({"name": "node1", "instance": node1});
+            nodes.push({"name": "node2", "instance": node2});
             nodes.push({"name": "miner1", "instance": miner1});
             nodes.push({"name": "miner2", "instance": miner2});
             nodes.push({"name": "miner3", "instance": miner3});
 
 
+            //get accounts for each node
             for (let node of nodes) {
                 accountsPerNode.push({"name": node.name, "accounts": await node.instance.eth.getAccounts()});
             }
 
-            // Use web3 to get the user's accounts.
-            // --> User-Account wird abgerufen #1
+            //array with hex of all accounts. Used to have one list of all accounts.
             const accounts = [];
 
+            //iterate through accountsPerNode to get all accounts in one array
             for (let acc of accountsPerNode) {
                 for (let i = 0; i <= acc.accounts.length; i++) {
                     if (acc.accounts[i] != null && acc.accounts[i] !== undefined)
@@ -94,8 +103,12 @@ class App extends Component {
                 }
             }
 
+            //set stateSetter to instantiate in the render methods
             const currentAccount = accounts[0];
             const selectedNode = nodes[0];
+            const selectedNodeAccounts = accountsPerNode.find(n => (n.name == nodes[0].name)).accounts;
+            console.log("selctedNodeAccounts in start", selectedNodeAccounts);
+
 
             // Get the contract instance.
             // --> Contract (Transaktionsdetails werden abgerufen) #2
@@ -126,7 +139,10 @@ class App extends Component {
                 deployedNetwork: deployedNetwork,
                 nodes: nodes,
                 selectedNode: selectedNode,
-                nodeCanvasData: nodeCanvasData
+                selectedNodeAccounts: selectedNodeAccounts,
+                nodeCanvasData: nodeCanvasData,
+                accountsPerNode: accountsPerNode
+
             }, this.runExample);
         } catch (error) {
             // Catch any errors for any of the above operations.
@@ -167,22 +183,23 @@ class App extends Component {
     };
 
     handleNodeClick = (nodeId) => {
-        const {nodes} = this.state;
+        const {nodes, accountsPerNode} = this.state;
         let selectedNode = nodes.find(n => (n.name == nodeId));
 
-
-
         if (selectedNode != null || selectedNode != undefined) {
-            this.setState({selectedNode: selectedNode})
+            let selectedNodeAccounts = accountsPerNode.find(n => (n.name == nodeId)).accounts;
+
+            this.setState({
+                selectedNode: selectedNode,
+                selectedNodeAccounts: selectedNodeAccounts
+            })
         }
     };
 
-    /*   getNodeInfo = (account) => {
-           getAccountInfo(this.state.web3, account);
-       };*/
-
-
     render() {
+
+        console.log("app render selectedNodeAccounts", this.state.selectedNodeAccounts)
+
         if (!this.state.web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
@@ -205,8 +222,8 @@ class App extends Component {
                     handleOnAccountClick={this.handleOnAccountClick}
                 />
                 <SendMenu
-                    web3={this.state.web3}
-                    accounts={this.state.accounts}
+                    web3={this.state.selectedNode.instance}
+                    accounts={this.state.selectedNodeAccounts}
                     handleOnAccountClick={this.handleOnAccountClick}
                 />
                 <GraphCanvas
