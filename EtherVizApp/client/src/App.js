@@ -167,9 +167,9 @@ class App extends Component {
         console.log(this.state.currentAccount)
     };
 
-    getNodeInfo = (account) => {
+ /*   getNodeInfo = (account) => {
         getAccountInfo(this.state.web3, account);
-    };
+    };*/
 
 
     render() {

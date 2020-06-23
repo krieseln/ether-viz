@@ -21,7 +21,7 @@ class InfoCanvas extends React.Component {
         }
     };
 
-     getAccountInfo = async () => {
+ /*    getAccountInfo = async () => {
         const {web3, currentAccount} = this.state;
         let x = await getAccountInfo(web3, currentAccount);
         return (
@@ -30,7 +30,7 @@ class InfoCanvas extends React.Component {
                 Balance: {x.balance}
             </Box>
         </div>)
-    };
+    };*/
 
     //functions here
     //@ToDo once an account is selected in menu canvas: highlight node in node canvas
@@ -39,15 +39,17 @@ class InfoCanvas extends React.Component {
 
     render() {
         const {currentAccount} = this.state;
+/*
         getAccountInfo(this.state.web3, this.state.currentAccount).then(console.log)
+*/
 
         return (
             <div className="infocanvas">
                 <h2>Account/Contract Info</h2>
                 <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
-                    {currentAccount.substring(0, currentAccount.length - 6)}
+                    {currentAccount}
                 </Box>
-                <getAccountInfo />
+             {/*   <getAccountInfo />*/}
             </div>
         );
     }
