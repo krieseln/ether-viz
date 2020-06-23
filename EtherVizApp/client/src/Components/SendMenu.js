@@ -32,11 +32,9 @@ class SendMenu extends React.Component {
 
     handleFromChange = (event) => {
         this.setState({from: event.target.value});
-        console.log("account from clicked", event.target.value);
     };
     handleToChange = (event) => {
         this.setState({to: event.target.value});
-        console.log("account to clicked", event.target.value);
     };
 
     handleAmountChange = (event) => {

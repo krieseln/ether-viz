@@ -6,7 +6,8 @@ class GraphCanvas extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: props.data
+            data: props.data,
+            handleNodeClick: props.handleNodeClick
         };
     }
 
@@ -16,21 +17,20 @@ class GraphCanvas extends React.Component {
         }
     };
 
-
     render() {
-
-        const {data} = this.state;
+        const {data, handleNodeClick} = this.state;
         const tempData = {
             nodes: [{id: "Harry"}, {id: "Sally"}, {id: "Alice"}],
             links: [{source: "Harry", target: "Sally"}, {source: "Harry", target: "Alice"}],
         };
+
         const config = {
             "automaticRearrangeAfterDropNode": false,
             "collapsible": false,
             "directed": false,
             "focusAnimationDuration": 0.75,
             "focusZoom": 1,
-            "height": 800,
+            "height": 600,
             "highlightDegree": 1,
             "highlightOpacity": 1,
             "linkHighlightBehavior": true,
@@ -87,21 +87,13 @@ class GraphCanvas extends React.Component {
             }
         };
 
-        const onClickNode = function(event) {
-            window.alert('Clicked the node');
-        };
-
-
-
-        //console.log("data in graphcanvas", tempData);
-
         return (
             <div className="graphcanvas">
                 <Graph
                     id="graphcanvas-id"
                     data={data}
                     config={config}
-                    onClickNode={onClickNode}
+                    onClickNode={(nodeId) => handleNodeClick(nodeId)}
                 />
             </div>
         )

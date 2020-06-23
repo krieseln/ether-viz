@@ -11,6 +11,8 @@ import MenuCanvas from "./Components/MenuCanvas";
 import InfoCanvas from "./Components/InfoCanvas";
 import MiningPoolCanvas from "./Components/MiningPoolCanvas";
 import GraphCanvas from "./Components/GraphCanvas";
+import TransactionFeed from './Components/TransactionFeed';
+
 
 import createNodeCanvasData from "./Functions/createNodeCanvasData";
 
@@ -29,7 +31,8 @@ class App extends Component {
             networkId: null,
             deployedNetwork: null,
             nodes: null,
-            nodeConvasData: null
+            nodeConvasData: null,
+            selectedNode: null
         }
     }
 
@@ -79,7 +82,6 @@ class App extends Component {
             for (let node of nodes) {
                 accountsPerNode.push({"name": node.name, "accounts": await node.instance.eth.getAccounts()});
             }
-            console.log("all accounts of all nodes:", accountsPerNode);
 
             // Use web3 to get the user's accounts.
             // --> User-Account wird abgerufen #1
@@ -92,10 +94,8 @@ class App extends Component {
                 }
             }
 
-            console.log("all nodes with accounts:", nodes)
-            console.log("all accounts array", accounts)
-
             const currentAccount = accounts[0];
+            const selectedNode = nodes[0];
 
             // Get the contract instance.
             // --> Contract (Transaktionsdetails werden abgerufen) #2
@@ -113,8 +113,7 @@ class App extends Component {
             // @todo--> set address the contract calls. Is set to account for now
             instance.options.address = accounts[0];
 
-            const nodeCanvasData = createNodeCanvasData(nodes, accountsPerNode, instance);
-            console.log("app.js nodecanvasdata", nodeCanvasData);
+            const nodeCanvasData = createNodeCanvasData(nodes, accountsPerNode, instance, currentAccount);
 
             // Set web3, accounts, and contract to the state, and then proceed with an
             // example of interacting with the contract's methods.
@@ -126,6 +125,7 @@ class App extends Component {
                 networkId: networkId,
                 deployedNetwork: deployedNetwork,
                 nodes: nodes,
+                selectedNode: selectedNode,
                 nodeCanvasData: nodeCanvasData
             }, this.runExample);
         } catch (error) {
@@ -164,16 +164,25 @@ class App extends Component {
 
     handleOnAccountClick = (props) => {
         this.setState({currentAccount: this.state.accounts[props]})
-        console.log(this.state.currentAccount)
     };
 
- /*   getNodeInfo = (account) => {
-        getAccountInfo(this.state.web3, account);
-    };*/
+    handleNodeClick = (nodeId) => {
+        const {nodes} = this.state;
+        let selectedNode = nodes.find(n => (n.name == nodeId));
+
+
+
+        if (selectedNode != null || selectedNode != undefined) {
+            this.setState({selectedNode: selectedNode})
+        }
+    };
+
+    /*   getNodeInfo = (account) => {
+           getAccountInfo(this.state.web3, account);
+       };*/
 
 
     render() {
-        const {storageValue, web3, accounts, contract, currentAccount, nodeinfo, nodes, nodeCanvasData} = this.state;
         if (!this.state.web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
@@ -199,10 +208,10 @@ class App extends Component {
                     web3={this.state.web3}
                     accounts={this.state.accounts}
                     handleOnAccountClick={this.handleOnAccountClick}
-
                 />
                 <GraphCanvas
-                    data = {this.state.nodeCanvasData}
+                    data={this.state.nodeCanvasData}
+                    handleNodeClick={this.handleNodeClick}
                 />
                 {/*
                 <NodeCanvas
@@ -213,8 +222,11 @@ class App extends Component {
                     nodes={this.state.nodes}
                 />
                 */}
+                <TransactionFeed
+                    selectedNode={this.state.selectedNode}
+                />
                 <BlockchainCanvas
-                    web3={this.state.web3}
+                    web3={this.state.selectedNode.instance}
                 />
                 <MiningPoolCanvas
                 />
@@ -230,6 +242,7 @@ class App extends Component {
                     web3={this.state.web3}
                     accounts={this.state.accounts}
                     contract={this.state.contract}
+                    currentAccount={this.state.currentAccount}
                 />
             </div>
         );

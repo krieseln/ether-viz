@@ -30,11 +30,18 @@
 
     display: grid;
     grid-template-columns: 15% 70% 15%;
-    grid-template-rows: 60% 40%;
-    grid-template-areas: "menucanvas graphcanvas infocanvas"
-                         "sendmenucanvas blockchaincanvas miningpoolcanvas"
+    grid-template-rows: 55% 5% 40%;
+    grid-template-areas:
+            "menucanvas graphcanvas infocanvas"
+            "menucanvas transactionfeed infocanvas"
+            "sendmenucanvas blockchaincanvas miningpoolcanvas"
 }
 
+.transactionfeed{
+    background-color: white;
+    border: 3px solid green;
+    grid-area: transactionfeed;
+}
 
 .graphcanvas {
     background-color: lightslategrey;
@@ -60,12 +67,14 @@
     grid-area: terminalcanvas;
 }
 */}
-
-.svg-container-graphcanvas-id{
-    height: 100%;
+.svg-container-graphcanvas-id {
+    display: inline-block;
+    position: relative;
     width: 100%;
+    padding-bottom: 100%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
 }
-
 
 .infocanvas {
     background-color: lightslategrey;

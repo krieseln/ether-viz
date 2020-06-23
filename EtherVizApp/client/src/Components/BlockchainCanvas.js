@@ -15,6 +15,13 @@ class BlockchainCanvas extends React.Component {
         this.getLastBlocksTicker();
     }
 
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.web3 !== this.state.web3){
+            this.setState({web3: this.props.web3});
+        }
+        console.log("web3 in BlockChainCanvas", this.state.web3._provider.host)
+    };
     //@ToDo add lines between blocks: line from /"block hash" to /"parent block hash"
 
     getLastBlocksTicker = () => {
@@ -42,8 +49,14 @@ class BlockchainCanvas extends React.Component {
             const callBlock = await web3.eth.getBlock(latestBlock - i);
             blockArray.push(callBlock);
         }
+        const pendingBlock = await web3.eth.getBlock("pending");
+
+        if (pendingBlock.number > blockArray[0].number) {
+            blockArray.push(pendingBlock);
+        }
+
         this.setState({blocks: blockArray, blockHashes: blockHashesArray});
-        //console.log(this.state.blocks);
+
     };
 
 
@@ -57,7 +70,8 @@ class BlockchainCanvas extends React.Component {
                 </div>
                 <div className="blocklines">
                     {blocks.map((block, index) => (
-                        <SteppedLineTo id="steppedlineto" borderColor={"black"} from={"hash_" + block.parentHash}
+                        <SteppedLineTo id="steppedlineto" borderColor={"black"}
+                                       from={(block.hash) ? "hash_" + block.hash : "hash_empty"}
                                        to={"parenthash_" + block.hash} zIndex={zIndex}/>
                     ))}
                 </div>

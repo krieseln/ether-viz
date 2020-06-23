@@ -29,13 +29,19 @@ class Block extends React.Component {
     render() {
         const {blockInfo, latestBlockNumber} = this.state;
 
-        const flagIsLatestBlock = (blockInfo.number === latestBlockNumber) ? "#dedede" : "white";
+        const flagIsLatestBlock = (blockInfo.number == latestBlockNumber) ? "#dedede" : "white";
+        const flagIsPendingBlock = (!blockInfo.hash) ? "#fcc2c2" : "white";
+
         const zIndex = -1;
 
         return (
                 <div style={{width: "22%", float: "left", margin: "10px"}} className={"container_" + blockInfo.hash}
                      title={blockInfo.number}>
-                    <TableContainer  component={Paper} style={{background: flagIsLatestBlock}}>
+                    <TableContainer
+                        component={Paper}
+                        style={{background: (flagIsPendingBlock == "#fcc2c2") ? flagIsPendingBlock : flagIsLatestBlock}}
+
+                    >
                         <Table className="blockTable" size="small" aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
@@ -49,10 +55,12 @@ class Block extends React.Component {
                                     <TableCell align="right">{blockInfo.number}</TableCell>
                                 </TableRow>
 
-                                <TableRow className={"hash_" + blockInfo.hash} key="blockhash">
+                                <TableRow className={(blockInfo.hash) ? "hash_" + blockInfo.hash : "hash_empty"} key="blockhash">
                                     <TableCell align="left">{"Blockhash"}</TableCell>
-                                    <Tooltip title={blockInfo.hash}>
-                                        <TableCell align="right">{blockInfo.hash.substr(0, 8) + "..."}</TableCell>
+                                    <Tooltip title={(blockInfo.hash) ? blockInfo.hash : "empty"}>
+                                        <TableCell align="right">
+                                            {(blockInfo.hash) ? (blockInfo.hash.substr(0, 8) + "...") : "empty"}
+                                        </TableCell>
                                     </Tooltip>
                                 </TableRow>
 

@@ -41,7 +41,7 @@ class DrawerMenu extends React.Component {
 
     handleGetBlock = () => {
         getBlock(this.state.web3);
-    }
+    };
 
     handleChangeValueClick = () => {
         changeValueTo(this.state.accounts, this.state.contract);
