@@ -60,14 +60,21 @@
     grid-area: terminalcanvas;
 }
 */}
+
+.svg-container-graphcanvas-id{
+    height: 100%;
+    width: 100%;
+}
+
+
 .infocanvas {
-    background-color: lime;
+    background-color: lightslategrey;
     border: 3px solid green;
     grid-area: infocanvas;
 }
 
 .nodecanvas {
-    background-color: lightcoral;
+    background-color: lightgrey;
     text-align: center;
     border: 3px solid green;
     grid-area: nodecanvas;

@@ -204,7 +204,7 @@ class App extends Component {
                 <GraphCanvas
                     data = {this.state.nodeCanvasData}
                 />
-                 {/*
+                {/*
                 <NodeCanvas
                     accounts={this.state.accounts}
                     currentAccount={this.state.currentAccount}
@@ -217,7 +217,7 @@ class App extends Component {
                     web3={this.state.web3}
                 />
                 <MiningPoolCanvas
-                    />
+                />
                 {/*<TerminalCanvas
                     storageValue={storageValue}
                     web3={web3}

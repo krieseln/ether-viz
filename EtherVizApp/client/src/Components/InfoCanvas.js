@@ -1,5 +1,7 @@
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import Box from '@material-ui/core/Box';
+import getAccountInfo from "../Functions/getAccountInfo";
 
 class InfoCanvas extends React.Component {
 
@@ -9,8 +11,26 @@ class InfoCanvas extends React.Component {
             web3: props.web3,
             accounts: props.accounts,
             contract: props.contract,
-        }
+            currentAccount: props.currentAccount
+        };
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.currentAccount !== this.state.currentAccount) {
+            this.setState({currentAccount: this.props.currentAccount});
+        }
+    };
+
+     getAccountInfo = async () => {
+        const {web3, currentAccount} = this.state;
+        let x = await getAccountInfo(web3, currentAccount);
+        return (
+            <div className="accountinfo">
+            <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
+                Balance: {x.balance}
+            </Box>
+        </div>)
+    };
 
     //functions here
     //@ToDo once an account is selected in menu canvas: highlight node in node canvas
@@ -18,41 +38,16 @@ class InfoCanvas extends React.Component {
 
 
     render() {
-        const {accounts} = this.state;
+        const {currentAccount} = this.state;
+        getAccountInfo(this.state.web3, this.state.currentAccount).then(console.log)
 
         return (
             <div className="infocanvas">
-                <div>
-                    <h2>Account/Contract Info</h2>
-                </div>
-                <div>
-                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                               label="" variant="filled" />
-                </div>
-                <div>
-                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                               label="" variant="filled" />
-                </div>
-                <div>
-                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                               label="" variant="filled" />
-                </div>
-                <div>
-                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                               label="" variant="filled" />
-                </div>
-                <div>
-                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                               label="" variant="filled" />
-                </div>
-                <div>
-                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                               label="" variant="filled" />
-                </div>
-                <div>
-                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                               label="" variant="filled" />
-                </div>
+                <h2>Account/Contract Info</h2>
+                <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
+                    {currentAccount.substring(0, currentAccount.length - 6)}
+                </Box>
+                <getAccountInfo />
             </div>
         );
     }

@@ -1,11 +1,7 @@
 import nodeLogo from '../Components/Ethereum_logo.svg'
 import accountLogo from '../Components/Private-Key-Icon.svg'
 
-export default function createNodeCanvasData(tempNodes, tempAccounts, tempContracts) {
-
-    console.log("nodes", tempNodes);
-    console.log("accounts", tempAccounts);
-    console.log("contracts", tempContracts);
+export default function createNodeCanvasData(tempNodes, tempAccounts, tempContracts, tempCurrentAccount) {
 
     const tempData = {
         nodes: [{id: "geth", symbolType: "node", svg: nodeLogo},
@@ -26,6 +22,16 @@ export default function createNodeCanvasData(tempNodes, tempAccounts, tempContra
         nodes.push({id: tempAccounts[i].name, symbolType: "node", svg: nodeLogo});
 
         for (let accountIter = 0; accountIter < tempAccounts[i].accounts.length; accountIter++) {
+
+            if(tempAccounts[i].accounts[accountIter] == tempCurrentAccount){
+                nodes.push({
+                    id: tempAccounts[i].accounts[accountIter],
+                    symbolType: "account",
+                    svg: accountLogo,
+                    size: 400
+                });
+            }
+
             nodes.push({
                 id: tempAccounts[i].accounts[accountIter],
                 symbolType: "account",
@@ -60,7 +66,7 @@ export default function createNodeCanvasData(tempNodes, tempAccounts, tempContra
     } else {
         data = {nodes, links};
     }
-    console.log("nodeCanvasData", data);
+    //console.log("nodeCanvasData", data);
     return data;
 
 }

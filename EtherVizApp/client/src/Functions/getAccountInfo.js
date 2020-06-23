@@ -9,15 +9,17 @@ export default async function getAccountInfo(web3, account) {
     const peerCount = await web3.eth.net.getPeerCount();
     const networkType = await web3.eth.net.getNetworkType();
 
-    return(
-        {
-            nodeInfo, currentProvider, balance,
-            "network": {
-                networkId,
-                isListening,
-                peerCount,
-                networkType
-            }
-        }
-    );
+    let out = {
+        nodeInfo,
+        currentProvider,
+        balance,
+        networkId,
+        isListening,
+        peerCount,
+        networkType
+    };
+
+    console.log("getAccountInfo", out);
+
+    return out;
 }

@@ -10,6 +10,13 @@ class GraphCanvas extends React.Component {
         };
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.currentAccount !== this.state.currentAccount){
+            this.setState({currentAccount: this.props.currentAccount});
+        }
+    };
+
+
     render() {
 
         const {data} = this.state;
@@ -78,10 +85,15 @@ class GraphCanvas extends React.Component {
                 "markerHeight": 6,
                 "markerWidth": 6
             }
-        }
+        };
+
+        const onClickNode = function(event) {
+            window.alert('Clicked the node');
+        };
 
 
-        console.log("data in graphcanvas", tempData);
+
+        //console.log("data in graphcanvas", tempData);
 
         return (
             <div className="graphcanvas">
@@ -89,7 +101,7 @@ class GraphCanvas extends React.Component {
                     id="graphcanvas-id"
                     data={data}
                     config={config}
-
+                    onClickNode={onClickNode}
                 />
             </div>
         )
