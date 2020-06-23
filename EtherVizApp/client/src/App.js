@@ -230,6 +230,7 @@ class App extends Component {
                     web3={this.state.web3}
                     accounts={this.state.accounts}
                     contract={this.state.contract}
+                    currentAccount={this.state.currentAccount}
                 />
             </div>
         );
