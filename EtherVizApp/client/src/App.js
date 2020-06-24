@@ -153,7 +153,7 @@ class App extends Component {
 
     //TESTDURCHLAUF für Contract
     runExample = async () => {
-        const {accounts, contract} = this.state;
+        const {contract} = this.state;
 
         // Stores a given value, 5 by default.
 

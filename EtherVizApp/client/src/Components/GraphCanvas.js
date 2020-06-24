@@ -1,6 +1,5 @@
 import React from 'react';
 import {Graph} from "react-d3-graph"
-import nodeLogo from './Ethereum_logo.svg'
 
 class GraphCanvas extends React.Component {
     constructor(props) {
@@ -19,10 +18,7 @@ class GraphCanvas extends React.Component {
 
     render() {
         const {data, handleNodeClick} = this.state;
-        const tempData = {
-            nodes: [{id: "Harry"}, {id: "Sally"}, {id: "Alice"}],
-            links: [{source: "Harry", target: "Sally"}, {source: "Harry", target: "Alice"}],
-        };
+
 
         const config = {
             "automaticRearrangeAfterDropNode": false,
