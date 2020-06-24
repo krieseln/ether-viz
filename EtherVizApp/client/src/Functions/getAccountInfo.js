@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default async function getAccountInfo(web3, account) {
     const nodeInfo = await web3.eth.getNodeInfo();
     const currentProvider = await web3.eth.personal.currentProvider;

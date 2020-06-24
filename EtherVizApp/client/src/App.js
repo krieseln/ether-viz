@@ -2,10 +2,7 @@ import React, {Component} from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import Web3 from "web3";
 import "./App.css";
-import NodeCanvas from './Components/NodeCanvas'
 import BlockchainCanvas from "./Components/BlockchainCanvas";
-import TerminalCanvas from "./Components/TerminalCanvas";
-import getAccountInfo from './Functions/getAccountInfo';
 import SendMenu from "./Components/SendMenu";
 import MenuCanvas from "./Components/MenuCanvas";
 import InfoCanvas from "./Components/InfoCanvas";
@@ -106,7 +103,7 @@ class App extends Component {
             //set stateSetter to instantiate in the render methods
             const currentAccount = accounts[0];
             const selectedNode = nodes[0];
-            const selectedNodeAccounts = accountsPerNode.find(n => (n.name == nodes[0].name)).accounts;
+            const selectedNodeAccounts = accountsPerNode.find(n => (n.name === nodes[0].name)).accounts;
             console.log("selctedNodeAccounts in start", selectedNodeAccounts);
 
 
@@ -184,10 +181,10 @@ class App extends Component {
 
     handleNodeClick = (nodeId) => {
         const {nodes, accountsPerNode} = this.state;
-        let selectedNode = nodes.find(n => (n.name == nodeId));
+        let selectedNode = nodes.find(n => (n.name === nodeId));
 
-        if (selectedNode != null || selectedNode != undefined) {
-            let selectedNodeAccounts = accountsPerNode.find(n => (n.name == nodeId)).accounts;
+        if (selectedNode !== null || selectedNode !== undefined) {
+            let selectedNodeAccounts = accountsPerNode.find(n => (n.name === nodeId)).accounts;
 
             this.setState({
                 selectedNode: selectedNode,

@@ -29,17 +29,15 @@ class Block extends React.Component {
     render() {
         const {blockInfo, latestBlockNumber} = this.state;
 
-        const flagIsLatestBlock = (blockInfo.number == latestBlockNumber) ? "#dedede" : "white";
+        const flagIsLatestBlock = (blockInfo.number === latestBlockNumber) ? "#dedede" : "white";
         const flagIsPendingBlock = (!blockInfo.hash) ? "#fcc2c2" : "white";
-
-        const zIndex = -1;
 
         return (
                 <div style={{width: "22%", float: "left", margin: "10px"}} className={"container_" + blockInfo.hash}
                      title={blockInfo.number}>
                     <TableContainer
                         component={Paper}
-                        style={{background: (flagIsPendingBlock == "#fcc2c2") ? flagIsPendingBlock : flagIsLatestBlock}}
+                        style={{background: (flagIsPendingBlock === "#fcc2c2") ? flagIsPendingBlock : flagIsLatestBlock}}
 
                     >
                         <Table className="blockTable" size="small" aria-label="a dense table">

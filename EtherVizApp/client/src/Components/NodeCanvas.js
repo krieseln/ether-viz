@@ -13,7 +13,7 @@ class NodeCanvas extends React.Component {
             currentAccount: props.currentAccount,
             nodes: props.nodes
         };
-        const zIndex = 1;
+
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
