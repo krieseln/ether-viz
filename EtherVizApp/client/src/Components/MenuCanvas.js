@@ -14,47 +14,51 @@ class MenuCanvas extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            web3: props.web3,
             accounts: props.accounts,
-            contract: props.contract,
             currentAccount: props.currentAccount,
-            handleOnAccountClick: props.handleOnAccountClick
+            handleOnAccountClick: props.handleOnAccountClick,
+            blur: false,
+            className: "menucanvas"
         }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.currentAccount !== this.state.currentAccount){
+        if (this.props.currentAccount !== this.state.currentAccount) {
             this.setState({currentAccount: this.props.currentAccount});
         }
     };
 
-    handleGetAccounts = () => {
-        getAccounts(this.state.web3).then(console.log);
+    blurCanvas = (event) => {
+        if (event.target.className.includes("menucanvas")) {
+            this.setState({
+                blur: (!this.state.blur),
+                className: this.state.blur ? "menucanvas" : "menucanvas blurry"
+            })
+        }
     };
 
-    handleChangeValueClick = () => {
-        changeValueTo(this.state.accounts, this.state.contract);
-    };
 
     render() {
-        const {accounts, currentAccount, handleOnAccountClick} = this.state;
-
+        const {accounts, currentAccount, handleOnAccountClick, className} = this.state;
         return (
-            <div className="menucanvas">
+            <div
+                className={className}
+                onClick={(event) => this.blurCanvas(event)}
+            >
                 <List>
                     <ListSubheader>Accounts</ListSubheader>
                     <ListItem key="currentAccount">
                         <ListItemText
-                            primary={currentAccount.substr(currentAccount.length - 6, currentAccount.length)}/>
+                            primary={"..." + currentAccount.substr(currentAccount.length - 6, currentAccount.length)}/>
                     </ListItem>
                     <Divider/>
                     {accounts.map((currentValue, index) => (
-                        <Tooltip title={currentValue} arrow>
+                        <Tooltip title={currentValue.alias} arrow>
                             <ListItem
                                 button
                                 onClick={() => handleOnAccountClick(index)}
-                                key={currentValue.substr(currentValue.length - 6, currentValue.length) + "_" + index}>
-                                <ListItemText primary={currentValue.substr(currentValue.length - 6, currentValue.length)}/>
+                                key={currentValue.alias + "_" + index}>
+                                <ListItemText primary={currentValue.alias}/>
                             </ListItem>
                         </Tooltip>
                     ))}

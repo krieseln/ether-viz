@@ -9,7 +9,10 @@ class BlockchainCanvas extends React.Component {
         this.state = {
             web3: props.web3,
             latestBlockNumber: null,
-            blocks: []
+            blocks: [],
+            blur: true,
+            className: "blockchaincanvas blurry"
+
         };
 
         this.getLastBlocksTicker();
@@ -58,13 +61,25 @@ class BlockchainCanvas extends React.Component {
 
     };
 
+    blurCanvas = (event) => {
+        if (event.target.className.includes("blockchaincanvas")) {
+            this.setState({
+                blur: (!this.state.blur),
+                className: this.state.blur ? "blockchaincanvas" : "blockchaincanvas blurry"
+            })
+        }
+    };
+
 
     render() {
-        const {blocks, latestBlockNumber} = this.state;
+        const {blocks, latestBlockNumber, className} = this.state;
         const zIndex = -1;
         return (
-            <div>
-                <div className="blockchaincanvas">
+            <div
+                className={className}
+                onClick={(event) => this.blurCanvas(event)}
+            >
+                <div >
                     {blocks.map(block => (<Block blockInfo={block} latestBlockNumber={latestBlockNumber}/>))}
                 </div>
                 <div className="blocklines">

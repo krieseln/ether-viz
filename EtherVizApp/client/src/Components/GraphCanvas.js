@@ -1,23 +1,62 @@
 import React from 'react';
 import {Graph} from "react-d3-graph"
+import Popover from '@material-ui/core/Popover';
 
 class GraphCanvas extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: props.data,
-            handleNodeClick: props.handleNodeClick
+            handleNodeClick: props.handleNodeClick,
+            anchorEl: null,
+            setAnchorEl: null,
+            open: false,
+            blur: true,
+            className: "graphcanvas blurry"
         };
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.currentAccount !== this.state.currentAccount){
+        if (this.props.currentAccount !== this.state.currentAccount) {
             this.setState({currentAccount: this.props.currentAccount});
         }
     };
 
+    onMouseOverNode = (nodeId) => {
+
+        if (nodeId == "geth_contract") {
+        }
+        console.log(`Mouse over node ${nodeId}`);
+    };
+
+
+    handleClick = (event) => {
+        const trgt = document.getElementById(event);
+        console.log("handleClick currenttarget", trgt);
+
+        this.setState({
+            setAnchorEl: trgt,
+            open: true
+        })
+    };
+
+    handleClose = () => {
+        this.setState({
+            setAnchorEl: null,
+            open: false
+        });
+    };
+
+    blurCanvas = (event) => {
+            this.setState({
+                blur: (!this.state.blur),
+                className: this.state.blur ? "graphcanvas" : "graphcanvas blurry"
+           })
+    };
+
     render() {
-        const {data, handleNodeClick} = this.state;
+        const {data, handleNodeClick, open, className} = this.state;
+        const id = open ? 'simple-popover' : undefined;
 
 
         const config = {
@@ -84,13 +123,32 @@ class GraphCanvas extends React.Component {
         };
 
         return (
-            <div className="graphcanvas">
+            <div className={className}
+                 onClick={(event) => this.blurCanvas(event)}
+            >
                 <Graph
                     id="graphcanvas-id"
                     data={data}
                     config={config}
                     onClickNode={(nodeId) => handleNodeClick(nodeId)}
+                    onMouseOverNode={(nodeId) => this.onMouseOverNode(nodeId)}
                 />
+                {/*<Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                >
+                    <span>The content of the Popover.</span>
+                </Popover>*/}
             </div>
         )
     }

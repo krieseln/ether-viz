@@ -1,7 +1,8 @@
-import nodeLogo from '../Components/Ethereum_logo.svg'
-import accountLogo from '../Components/Private-Key-Icon.svg'
+import nodeLogo from '../Components/BlockchainComponents/sprites/Ethereum_logo.svg'
+import accountLogo from '../Components/BlockchainComponents/sprites/Private-Key-Icon.svg'
+import smartcontractLogo from '../Components/BlockchainComponents/sprites/smartcontract.svg'
 
-export default function createNodeCanvasData(tempNodes, tempAccounts, tempContracts, tempCurrentAccount) {
+export default function createNodeCanvasData(tempNodes, tempAccounts, contracts) {
 
 
 
@@ -39,6 +40,20 @@ export default function createNodeCanvasData(tempNodes, tempAccounts, tempContra
                 target: tempAccounts[0].name
             })
         }
+    }
+
+    for(let ci = 0; ci < contracts.length; ci++){
+        nodes.push({
+            id: contracts[ci].id + "_contract",
+            symbolType: "smartcontract",
+            svg: smartcontractLogo,
+            size: 400
+        });
+
+        links.push({
+            source: contracts[ci].id + "_contract",
+            target: contracts[ci].instance._address
+        });
     }
 
     let data = {};

@@ -2,13 +2,13 @@ import React, {Component} from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import Web3 from "web3";
 import "./App.css";
-import BlockchainCanvas from "./Components/BlockchainCanvas";
+import BlockchainCanvas from "./Components/BlockchainComponents/BlockchainCanvas";
 import SendMenu from "./Components/SendMenu";
 import MenuCanvas from "./Components/MenuCanvas";
 import InfoCanvas from "./Components/InfoCanvas";
 import MiningPoolCanvas from "./Components/MiningPoolCanvas";
 import GraphCanvas from "./Components/GraphCanvas";
-import TransactionFeed from './Components/TransactionFeed';
+import NodeInformation from './Components/NodeInformation';
 
 
 import createNodeCanvasData from "./Functions/createNodeCanvasData";
@@ -23,7 +23,7 @@ class App extends Component {
             web3: null,
             debug: null,
             accounts: null,
-            contract: null,
+            contracts: null,
             currentAccount: null,
             networkId: null,
             deployedNetwork: null,
@@ -66,27 +66,41 @@ class App extends Component {
             );
 
 
+            const usernames = []
             const nodes = [];
             const accountsPerNode = [];
+            const contracts = [];
 
-            const web3 = new Web3(node1Provider);
-            const node1 = new Web3(node1ProviderWS);
+
+            /*
+            const node1 = new Web3(node1Provider);
             const node2 = new Web3(node2Provider);
             const miner1 = new Web3(miner1Provider);
             const miner2 = new Web3(miner2Provider);
             const miner3 = new Web3(miner3Provider);
 
-            nodes.push({"name": "geth", "instance": web3});
+            nodes.push({"name": "geth", "instance": node1});
             nodes.push({"name": "node1", "instance": node1});
             nodes.push({"name": "node2", "instance": node2});
             nodes.push({"name": "miner1", "instance": miner1});
             nodes.push({"name": "miner2", "instance": miner2});
             nodes.push({"name": "miner3", "instance": miner3});
+            */
+
+            //UseCase: Buy Car from Seller. Notify State insurance to confirm transaction
+
+            const interessenten = new Web3(node1Provider);
+            const verkaufende = new Web3(miner1Provider);
+            const staat = new Web3(miner3Provider);
+
+            nodes.push({"name": "Interessenten", "instance": interessenten, "alias": "Seda"});
+            nodes.push({"name": "Verkaufende", "instance": verkaufende, "alias": "Mark"});
+            nodes.push({"name": "Staat", "instance": staat, "alias": "Staat"});
 
 
             //get accounts for each node
             for (let node of nodes) {
-                accountsPerNode.push({"name": node.name, "accounts": await node.instance.eth.getAccounts()});
+                accountsPerNode.push({"name": node.name, "accounts": await node.instance.eth.getAccounts(), "alias": node.alias});
             }
 
             //array with hex of all accounts. Used to have one list of all accounts.
@@ -96,42 +110,46 @@ class App extends Component {
             for (let acc of accountsPerNode) {
                 for (let i = 0; i <= acc.accounts.length; i++) {
                     if (acc.accounts[i] != null && acc.accounts[i] !== undefined)
-                        accounts.push(acc.accounts[i]);
+                        accounts.push({"hash": acc.accounts[i], "alias": acc.alias});
                 }
+                //console.log("accounts", accounts);
             }
 
             //set stateSetter to instantiate in the render methods
             const currentAccount = accounts[0];
             const selectedNode = nodes[0];
-            const selectedNodeAccounts = accountsPerNode.find(n => (n.name === nodes[0].name)).accounts;
-            console.log("selctedNodeAccounts in start", selectedNodeAccounts);
+            const selectedNodeAccounts = accountsPerNode.find(n => (n.name == nodes[0].name)).accounts;
+            //console.log("selctedNodeAccounts in start", selectedNodeAccounts);
 
 
             // Get the contract instance.
             // --> Contract (Transaktionsdetails werden abgerufen) #2
-            const networkId = await web3.eth.net.getId();
+            const networkId = await nodes[0].instance.eth.net.getId();
 
             // --> Netzwerk zu Contract wird aufgerufen
             const deployedNetwork = SimpleStorageContract.networks[networkId];
 
             //--> Neue Instanz des Contracts wird erzeugt
-            const instance = new web3.eth.Contract(
+            const instance = new nodes[0].instance.eth.Contract(
                 SimpleStorageContract.abi,
                 deployedNetwork && deployedNetwork.address,
             );
 
             // @todo--> set address the contract calls. Is set to account for now
-            instance.options.address = accounts[0];
+            instance.options.address = accounts[0].hash;
 
-            const nodeCanvasData = createNodeCanvasData(nodes, accountsPerNode, instance, currentAccount);
+            contracts.push({id: nodes[0].name, instance: instance});
+
+
+            const nodeCanvasData = createNodeCanvasData(nodes, accountsPerNode, contracts);
 
             // Set web3, accounts, and contract to the state, and then proceed with an
             // example of interacting with the contract's methods.
             this.setState({
-                web3,
+                web3: nodes[0].instance,
                 accounts: accounts,
-                contract: instance,
-                currentAccount: currentAccount,
+                contracts: contracts,
+                currentAccount: currentAccount.hash,
                 networkId: networkId,
                 deployedNetwork: deployedNetwork,
                 nodes: nodes,
@@ -151,21 +169,23 @@ class App extends Component {
     };
 
 
+
+
     //TESTDURCHLAUF für Contract
     runExample = async () => {
-        const {contract} = this.state;
+        const {contracts} = this.state;
 
         // Stores a given value, 5 by default.
 
-        let oldValue = await contract.methods.get().call();
+        let oldValue = await contracts[0].instance.methods.get().call();
         if (oldValue == null) {
-            await contract.methods.set(40).send({from: this.state.currentAccount});
+            await contracts[0].instance.methods.set(40).send({from: this.state.currentAccount});
         } else {
-            await contract.methods.set(oldValue).send({from: this.state.currentAccount});
+            await contracts[0].instance.methods.set(oldValue).send({from: this.state.currentAccount});
         }
 
         // Get the value from the contract to prove it worked.
-        const response = await contract.methods.get().call();
+        const response = await contracts[0].instance.methods.get().call();
 
 
         //nodeinfo
@@ -176,15 +196,15 @@ class App extends Component {
     };
 
     handleOnAccountClick = (props) => {
-        this.setState({currentAccount: this.state.accounts[props]})
+        this.setState({currentAccount: this.state.accounts[props].hash})
     };
 
     handleNodeClick = (nodeId) => {
         const {nodes, accountsPerNode} = this.state;
-        let selectedNode = nodes.find(n => (n.name === nodeId));
+        let selectedNode = nodes.find(n => (n.name == nodeId));
 
-        if (selectedNode !== null || selectedNode !== undefined) {
-            let selectedNodeAccounts = accountsPerNode.find(n => (n.name === nodeId)).accounts;
+        if (selectedNode != null || selectedNode != undefined) {
+            let selectedNodeAccounts = accountsPerNode.find(n => (n.name == nodeId)).accounts;
 
             this.setState({
                 selectedNode: selectedNode,
@@ -193,28 +213,16 @@ class App extends Component {
         }
     };
 
+
+
     render() {
-
-        console.log("app render selectedNodeAccounts", this.state.selectedNodeAccounts)
-
         if (!this.state.web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
         return (
             <div className="App container">
-                {/*<DrawerMenu
-                    web3={this.state.web3}
-                    accounts={this.state.accounts}
-                    contract={this.state.contract}
-                    storageValue={this.state.storageValue}
-                    currentAccount={this.state.currentAccount}
-                    handleOnAccountClick={this.handleOnAccountClick}
-
-                />*/}
                 <MenuCanvas
-                    web3={this.state.web3}
                     accounts={this.state.accounts}
-                    contract={this.state.contract}
                     currentAccount={this.state.currentAccount}
                     handleOnAccountClick={this.handleOnAccountClick}
                 />
@@ -227,16 +235,7 @@ class App extends Component {
                     data={this.state.nodeCanvasData}
                     handleNodeClick={this.handleNodeClick}
                 />
-                {/*
-                <NodeCanvas
-                    accounts={this.state.accounts}
-                    currentAccount={this.state.currentAccount}
-                    getNodeInfo={this.getNodeInfo}
-                    contract={this.state.contract}
-                    nodes={this.state.nodes}
-                />
-                */}
-                <TransactionFeed
+                <NodeInformation
                     selectedNode={this.state.selectedNode}
                 />
                 <BlockchainCanvas
@@ -244,18 +243,9 @@ class App extends Component {
                 />
                 <MiningPoolCanvas
                 />
-                {/*<TerminalCanvas
-                    storageValue={storageValue}
-                    web3={web3}
-                    accounts={accounts}
-                    contract={contract}
-                    currentAccount={currentAccount}
-                    nodeinfo={nodeinfo}
-                />*/}
                 <InfoCanvas
                     web3={this.state.web3}
-                    accounts={this.state.accounts}
-                    contract={this.state.contract}
+                    contract={this.state.contracts[0].instance}
                     currentAccount={this.state.currentAccount}
                 />
             </div>

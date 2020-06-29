@@ -19,7 +19,10 @@ class SendMenu extends React.Component {
             accounts: props.accounts,
             handleOnAccountClick: props.handleOnAccountClick,
             from: null,
-            to: null
+            to: null,
+            blur: true,
+            className: "sendmenucanvas blurry"
+
 
         }
     }
@@ -30,7 +33,7 @@ class SendMenu extends React.Component {
             accounts: this.props.accounts
             });
         }
-        console.log("SendMenu componentDidUpdate", this.state.web3._provider.host);
+        //console.log("SendMenu componentDidUpdate", this.state.web3._provider.host);
     };
 
     handleSendClick = () => {
@@ -56,11 +59,23 @@ class SendMenu extends React.Component {
     //@ToDo text field should only be able to hold numbers and a dot (letters and further points are not allowed)
     //@ToDo send button should execute the transaction
 
+    blurCanvas = (event) => {
+        console.log(event.target.className);
+        if (event.target.className.includes("sendmenucanvas")) {
+            this.setState({
+                blur: (!this.state.blur),
+                className: this.state.blur ? "sendmenucanvas" : "sendmenucanvas blurry"
+            })
+        }
+    };
+
     render() {
-        const {accounts} = this.state;
+        const {accounts, className} = this.state;
 
         return (
-        <div className="sendmenucanvas">
+        <div className={className}
+             onClick={(event) => this.blurCanvas(event)}
+        >
             <List>
                 <ListSubheader style={{fontSize: "large", fontStyle: "bold"}}>send ETH</ListSubheader>
                 <ListItem>

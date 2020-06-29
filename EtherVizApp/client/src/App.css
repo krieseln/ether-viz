@@ -2,6 +2,13 @@
     text-align: center;
 }
 
+:root {
+    --maincolor: #f4f4f4;
+    --secondarycolor: rgba(7, 7, 7, 0.3);
+    --tertiarycolor: #e4decd;
+
+}
+
 .App-logo {
     height: 40vmin;
 }
@@ -37,37 +44,6 @@
             "sendmenucanvas blockchaincanvas miningpoolcanvas"
 }
 
-.transactionfeed{
-    background-color: white;
-    border: 3px solid green;
-    grid-area: transactionfeed;
-}
-
-.graphcanvas {
-    background-color: lightslategrey;
-    border: 3px solid green;
-    grid-area: graphcanvas;
-}
-
-.menucanvas {
-    background-color: lightslategrey;
-    border: 3px solid green;
-    grid-area: menucanvas;
-}
-
-.sendmenucanvas {
-    background-color: antiquewhite;
-    border: 3px solid green;
-    grid-area: sendmenucanvas;
-}
-
-{/*.terminalcanvas {
-    background-color: lightblue;
-    border: 3px solid green;
-    grid-area: terminalcanvas;
-}
-*/}
-
 
 #graphcanvas-id-graph-wrapper {
     display: block;
@@ -92,28 +68,50 @@ g#graphcanvas-id-graph-container-zoomable {
     transform: translate(50%,50%);
 }
 
+
+.blurry{
+    filter: blur(5px)
+}
+
+.transactionfeed{
+    background-color: var(--maincolor);
+    border: 1px solid var(--secondarycolor);
+    grid-area: transactionfeed;
+}
+
+.graphcanvas {
+    background-color: var(--maincolor);
+    border: 1px solid var(--secondarycolor);
+    grid-area: graphcanvas;
+}
+
+.menucanvas {
+    background-color: var(--maincolor);
+    border: 1px solid var(--secondarycolor);
+    grid-area: menucanvas;
+}
+
+.sendmenucanvas {
+    background-color: var(--maincolor);
+    border: 1px solid var(--secondarycolor);
+    grid-area: sendmenucanvas;
+}
+
 .infocanvas {
-    background-color: lightslategrey;
-    border: 3px solid green;
+    background-color: var(--maincolor);
+    border: 1px solid var(--secondarycolor);
     grid-area: infocanvas;
 }
 
-.nodecanvas {
-    background-color: lightgrey;
-    text-align: center;
-    border: 3px solid green;
-    grid-area: nodecanvas;
-}
-
 .blockchaincanvas {
-    background-color: lightgrey;
-    border: 3px solid green;
+    background-color: var(--maincolor);
+    border: 1px solid var(--secondarycolor);
     grid-area: blockchaincanvas;
 }
 
 .miningpoolcanvas {
-    background-color: lightgrey;
-    border: 3px solid green;
+    background-color: var(--maincolor);
+    border: 1px solid var(--secondarycolor);
     grid-area: miningpoolcanvas;
 }
 
