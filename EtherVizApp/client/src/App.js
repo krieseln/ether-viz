@@ -35,6 +35,7 @@ class App extends Component {
         }
     }
 
+
     componentDidMount = async () => {
         try {
             // Get network provider and web3 instance.
@@ -118,7 +119,7 @@ class App extends Component {
             //set stateSetter to instantiate in the render methods
             const currentAccount = accounts[0];
             const selectedNode = nodes[0];
-            const selectedNodeAccounts = accountsPerNode.find(n => (n.name == nodes[0].name)).accounts;
+            const selectedNodeAccounts = accountsPerNode.find(n => (n.name === nodes[0].name)).accounts;
             //console.log("selctedNodeAccounts in start", selectedNodeAccounts);
 
 
@@ -201,10 +202,10 @@ class App extends Component {
 
     handleNodeClick = (nodeId) => {
         const {nodes, accountsPerNode} = this.state;
-        let selectedNode = nodes.find(n => (n.name == nodeId));
+        let selectedNode = nodes.find(n => (n.name === nodeId));
 
-        if (selectedNode != null || selectedNode != undefined) {
-            let selectedNodeAccounts = accountsPerNode.find(n => (n.name == nodeId)).accounts;
+        if (selectedNode != null || selectedNode !== undefined) {
+            let selectedNodeAccounts = accountsPerNode.find(n => (n.name === nodeId)).accounts;
 
             this.setState({
                 selectedNode: selectedNode,
