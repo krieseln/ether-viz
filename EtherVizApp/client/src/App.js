@@ -6,7 +6,7 @@ import BlockchainCanvas from "./Components/BlockchainComponents/BlockchainCanvas
 import SendMenu from "./Components/SendMenu";
 import MenuCanvas from "./Components/MenuCanvas";
 import InfoCanvas from "./Components/InfoCanvas";
-import MiningPoolCanvas from "./Components/MiningPoolCanvas";
+import MiningPoolCanvas from "./Components/SmartContractCanvas";
 import GraphCanvas from "./Components/GraphCanvas";
 import NodeInformation from './Components/NodeInformation';
 
