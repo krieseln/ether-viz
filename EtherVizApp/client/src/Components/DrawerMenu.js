@@ -79,7 +79,7 @@ class DrawerMenu extends React.Component {
                             <ListItemIcon><AccountTreeIcon/></ListItemIcon>
                             <ListItemText primary="Get Accounts"/>
                         </ListItem>
-                        <ListItem button key="getAccountsAction" onClick={this.handleGetBlock}>
+                        <ListItem button key="getBlockAction" onClick={this.handleGetBlock}>
                             <ListItemIcon><AccountTreeIcon/></ListItemIcon>
                             <ListItemText primary="Get Block"/>
                         </ListItem>

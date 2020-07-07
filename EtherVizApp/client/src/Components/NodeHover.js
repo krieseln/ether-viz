@@ -8,7 +8,7 @@ class NodeHover extends React.Component {
     }
 
     showPos(event, text) {
-        var el, x, y;
+        let el, x, y;
 
         el = document.getElementById('PopUp');
         if (window.event) {

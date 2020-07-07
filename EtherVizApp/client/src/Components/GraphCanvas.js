@@ -24,7 +24,7 @@ class GraphCanvas extends React.Component {
 
     onMouseOverNode = (nodeId) => {
 
-        if (nodeId == "geth_contract") {
+        if (nodeId === "geth_contract") {
         }
         console.log(`Mouse over node ${nodeId}`);
     };

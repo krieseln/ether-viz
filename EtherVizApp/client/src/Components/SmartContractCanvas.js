@@ -27,16 +27,22 @@ class MiningPoolCanvas extends React.Component {
         return(
            <div className={this.state.className} onClick={(event) => this.blurCanvas(event)}>
                <div>
-                   <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                              label="Hash rate" variant="filled" />
+                   <TextField style={{width: "100%", backgroundColor: "white"}}
+                              id="filled-basic"
+                              label="Smart Contract Info"
+                              variant="filled"
+                              disabled={true}
+                   />
                </div>
                <div>
-                   <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                              label="active miners" variant="filled" />
-               </div>
-               <div>
-                   <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
-                              label="blocks" variant="filled" />
+                   <TextField
+                       style={{width: "100%", backgroundColor: "white"}}
+                       id="smart contract content"
+                       label="smart contract content"
+                       multiline
+                       rows={12}
+                       disabled={true}
+                   />
                </div>
            </div>
         )
