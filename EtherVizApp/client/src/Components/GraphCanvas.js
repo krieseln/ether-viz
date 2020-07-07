@@ -48,10 +48,12 @@ class GraphCanvas extends React.Component {
     };
 
     blurCanvas = (event) => {
+        if (event.target.nodeName.includes("svg")) {
             this.setState({
-                blur: (!this.state.blur),
+                blur: !this.state.blur,
                 className: this.state.blur ? "graphcanvas" : "graphcanvas blurry"
-           })
+            })
+        }
     };
 
     render() {
