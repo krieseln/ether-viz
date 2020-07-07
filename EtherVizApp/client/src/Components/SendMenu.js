@@ -17,6 +17,7 @@ class SendMenu extends React.Component {
         this.state = {
             web3: props.web3,
             accounts: props.accounts,
+            toAccounts: props.toAccounts,
             handleOnAccountClick: props.handleOnAccountClick,
             from: null,
             to: null,
@@ -70,7 +71,7 @@ class SendMenu extends React.Component {
     };
 
     render() {
-        const {accounts, className} = this.state;
+        const {accounts, className, toAccounts} = this.state;
 
         return (
         <div className={className}
@@ -98,8 +99,8 @@ class SendMenu extends React.Component {
                             onChange={this.handleToChange}
                             id="send-to-account-dropdown">
                             <option/>
-                            {accounts.map((accountHash, index) => (
-                                    <option value={accountHash}>{accountHash}</option>
+                            {toAccounts.map((account, index) => (
+                                    <option value={account.hash}>{account.hash}</option>
                             ))}
                         </NativeSelect>
                     </FormControl>

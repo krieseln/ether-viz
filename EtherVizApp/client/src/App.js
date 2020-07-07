@@ -229,6 +229,7 @@ class App extends Component {
                 />
                 <SendMenu
                     web3={this.state.selectedNode.instance}
+                    toAccounts={this.state.accounts}
                     accounts={this.state.selectedNodeAccounts}
                     handleOnAccountClick={this.handleOnAccountClick}
                 />
