@@ -61,7 +61,6 @@ class SendMenu extends React.Component {
     //@ToDo send button should execute the transaction
 
     blurCanvas = (event) => {
-        console.log(event.target.className);
         if (event.target.className.includes("sendmenucanvas")) {
             this.setState({
                 blur: (!this.state.blur),

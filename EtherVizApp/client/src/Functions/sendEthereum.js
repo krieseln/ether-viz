@@ -3,7 +3,7 @@ export default async function sendEthereum(web3, fromAddress, toAddress, amountI
 
 
     console.log("Transaction sent from", fromAddress, "transaction sent to", toAddress);
-    console.log("current provider host", web3._provider.host)
+    console.log("current provider host", web3._provider.host);
 
     const sendValue = '99999999999999999999999999999999999';
 

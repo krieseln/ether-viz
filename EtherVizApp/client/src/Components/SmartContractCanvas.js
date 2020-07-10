@@ -7,7 +7,7 @@ class MiningPoolCanvas extends React.Component {
         super(props);
         this.state = {
             blur: true,
-            className: "miningpoolcanvas blurry"
+            className: "miningpoolcanvas"
 
         }
     }
@@ -24,27 +24,22 @@ class MiningPoolCanvas extends React.Component {
     render() {
 
 
-        return(
-           <div className={this.state.className} onClick={(event) => this.blurCanvas(event)}>
-               <div>
-                   <TextField style={{width: "100%", backgroundColor: "white"}}
-                              id="filled-basic"
-                              label="Smart Contract Info"
-                              variant="filled"
-                              disabled={true}
-                   />
-               </div>
-               <div>
-                   <TextField
-                       style={{width: "100%", backgroundColor: "white"}}
-                       id="smart contract content"
-                       label="smart contract content"
-                       multiline
-                       rows={12}
-                       disabled={true}
-                   />
-               </div>
-           </div>
+        return (
+            <div className={this.state.className} onClick={(event) => this.blurCanvas(event)}>
+                <div>
+                    <p>Smart Contract</p>
+                    <table>
+                        <tr>
+                            <th>Owner:</th>
+                            <th>Jens</th>
+                        </tr>
+                        <tr>
+                            <th>Value:</th>
+                            <th>120 Eth</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         )
     }
 }

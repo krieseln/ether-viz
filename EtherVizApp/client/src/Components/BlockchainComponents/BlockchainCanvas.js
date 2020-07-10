@@ -38,7 +38,7 @@ class BlockchainCanvas extends React.Component {
         const {web3} = this.state;
 
         let latestBlock = await web3.eth.getBlockNumber();
-        this.setState({latestBlockNumber: latestBlock})
+        this.setState({latestBlockNumber: latestBlock});
         let blocksAway = 0;
         if (latestBlock <= 3) {
             blocksAway = latestBlock;

@@ -54,8 +54,6 @@ class InfoCanvas extends React.Component {
         });
         let contractCode = await web3.eth.getCode(currentAccount);
 
-
-
         tmpcurrentAccountInfo.push(accountBalance);
         tmpcurrentAccountInfo.push(transactionCount);
         tmpcurrentAccountInfo.push(contractCode);
@@ -83,7 +81,7 @@ class InfoCanvas extends React.Component {
             <div className={className}
                 onClick={(event) => this.blurCanvas(event)}
             >
-                <h2>Account/Contract Info</h2>
+                <h2>Account Info</h2>
                 <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
                    Account-Hash: {currentAccount.substr(currentAccount.length - 6, currentAccount.length)}
                 </Box>

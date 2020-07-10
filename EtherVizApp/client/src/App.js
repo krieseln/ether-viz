@@ -67,7 +67,6 @@ class App extends Component {
             );
 
 
-            const usernames = []
             const nodes = [];
             const accountsPerNode = [];
             const contracts = [];
@@ -94,8 +93,8 @@ class App extends Component {
             const verkaufende = new Web3(miner1Provider);
             const staat = new Web3(miner3Provider);
 
-            nodes.push({"name": "Interessenten", "instance": interessenten, "alias": "Seda"});
-            nodes.push({"name": "Verkaufende", "instance": verkaufende, "alias": "Mark"});
+            nodes.push({"name": "Interessenten", "instance": interessenten, "alias": "Tim"});
+            nodes.push({"name": "Verkaufende", "instance": verkaufende, "alias": "Jens"});
             nodes.push({"name": "Staat", "instance": staat, "alias": "Staat"});
 
 
@@ -137,9 +136,9 @@ class App extends Component {
             );
 
             // @todo--> set address the contract calls. Is set to account for now
-            instance.options.address = accounts[0].hash;
+            instance.options.address = accounts[1].hash;
 
-            contracts.push({id: nodes[0].name, instance: instance});
+            contracts.push({id: nodes[1].name, instance: instance});
 
 
             const nodeCanvasData = createNodeCanvasData(nodes, accountsPerNode, contracts);
