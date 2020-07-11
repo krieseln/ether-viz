@@ -10,13 +10,14 @@ export default async function sendEthereum(web3, fromAddress, toAddress, amountI
     web3.eth.sendTransaction({
         from: fromAddress,
         to: toAddress,
-        value: sendValue
+        value: amountInEther
     })
         .on('transactionHash', function(hash){
             console.log("send Transaction: hash", hash)
         })
         .on('receipt', function(receipt){
-            console.log("send Transaction: receipt", receipt)
+            console.log("send Transaction: receipt", receipt);
+            alert("Ethereum sent. \n Transaction mined in Block " + receipt.blockNumber);
         })
         .on('confirmation', function(confirmationNumber, receipt){
             console.log("send Transaction confirmationNumber, receipt",confirmationNumber, receipt)

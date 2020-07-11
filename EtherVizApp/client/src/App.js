@@ -89,14 +89,13 @@ class App extends Component {
 
             //UseCase: Buy Car from Seller. Notify State insurance to confirm transaction
 
-            const interessenten = new Web3(node1Provider);
+            const interessenten  = new Web3(miner3Provider);
             const verkaufende = new Web3(miner1Provider);
-            const staat = new Web3(miner3Provider);
+            const staat = new Web3(node1Provider);
 
-            nodes.push({"name": "Interessenten", "instance": interessenten, "alias": "Tim"});
-            nodes.push({"name": "Verkaufende", "instance": verkaufende, "alias": "Jens"});
-            nodes.push({"name": "Staat", "instance": staat, "alias": "Staat"});
-
+            nodes.push({"name": "Interessent", "instance": interessenten, "alias": "Tim"});
+            nodes.push({"name": "Autohaus", "instance": verkaufende, "alias": "Jens"});
+            nodes.push({"name": "Staat", "instance": staat, "alias": "Zulassungsstelle"});
 
             //get accounts for each node
             for (let node of nodes) {

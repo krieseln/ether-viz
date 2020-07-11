@@ -21,17 +21,20 @@ class SendMenu extends React.Component {
             handleOnAccountClick: props.handleOnAccountClick,
             from: null,
             to: null,
+            amount: null,
+            transactionSent: false,
             blur: true,
-            className: "sendmenucanvas blurry"
+            className: "sendmenucanvas "
 
 
         }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.web3 !== this.state.web3){
-            this.setState({web3: this.props.web3,
-            accounts: this.props.accounts
+        if (this.props.web3 !== this.state.web3) {
+            this.setState({
+                web3: this.props.web3,
+                accounts: this.props.accounts
             });
         }
         //console.log("SendMenu componentDidUpdate", this.state.web3._provider.host);
@@ -39,12 +42,22 @@ class SendMenu extends React.Component {
 
     handleSendClick = () => {
         const {web3, from, to, amount} = this.state;
-        console.log("handleSendClick", web3._provider);
-        sendEthereum(web3, from, to, amount);
-        console.log("handleSendClick", from, to, amount);
+
+            console.log("handleSendClick", web3._provider);
+            sendEthereum(web3, from, to, amount);
+            console.log("handleSendClick", from, to, amount);
+
+            //reset form
+            document.getElementById("setTransactionDetailsForm").reset();
+            this.setState({
+                from: '',
+                to: '',
+                amount: ''
+            });
     };
 
     handleFromChange = (event) => {
+        console.log("state changed");
         this.setState({from: event.target.value});
     };
     handleToChange = (event) => {
@@ -73,46 +86,51 @@ class SendMenu extends React.Component {
         const {accounts, className, toAccounts} = this.state;
 
         return (
-        <div className={className}
-             onClick={(event) => this.blurCanvas(event)}
-        >
-            <List>
-                <ListSubheader style={{fontSize: "large", fontStyle: "bold"}}>send ETH</ListSubheader>
-                <ListItem>
-                    <FormControl>
-                        <InputLabel htmlFor="from-selection">From</InputLabel>
-                        <NativeSelect
-                            onChange={this.handleFromChange}
-                            id="send-from-account-dropdown">
-                            <option/>
-                            {accounts.map((accountHash, index) => (
-                                <option value={accountHash}>{accountHash}</option>
-                            ))}
-                        </NativeSelect>
-                    </FormControl>
-                </ListItem>
-                <ListItem>
-                    <FormControl>
-                        <InputLabel style={{color: "black"}} htmlFor="to-selection">To</InputLabel>
-                        <NativeSelect
-                            onChange={this.handleToChange}
-                            id="send-to-account-dropdown">
-                            <option/>
-                            {toAccounts.map((account, index) => (
-                                    <option value={account.hash}>{account.hash}</option>
-                            ))}
-                        </NativeSelect>
-                    </FormControl>
-                </ListItem>
-                <ListItem>
-                    <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic" label="ETH amount" variant="filled" onChange={this.handleAmountChange} />
-                </ListItem>
-                <ListItem>
-                    <Button onClick={this.handleSendClick} style={{width: "100%"}} variant="contained">Send</Button>
-                </ListItem>
-            </List>
-        </div>
+            <div className={className}
+                 onClick={(event) => this.blurCanvas(event)}
+            >
+                <form id="setTransactionDetailsForm">
+                    <List>
+                        <ListSubheader style={{fontSize: "large", fontStyle: "bold"}}>send ETH</ListSubheader>
+                        <ListItem>
+                            <FormControl>
+                                <InputLabel htmlFor="from-selection">From</InputLabel>
+                                <NativeSelect
+                                    onChange={this.handleFromChange}
+                                    id="send-from-account-dropdown">
+                                    <option/>
+                                    {accounts.map((accountHash, index) => (
+                                        <option value={accountHash}>{accountHash}</option>
+                                    ))}
+                                </NativeSelect>
+                            </FormControl>
+                        </ListItem>
+                        <ListItem>
+                            <FormControl>
+                                <InputLabel style={{color: "black"}} htmlFor="to-selection">To</InputLabel>
+                                <NativeSelect
+                                    onChange={this.handleToChange}
+                                    id="send-to-account-dropdown">
+                                    <option/>
+                                    {toAccounts.map((account, index) => (
+                                        <option value={account.hash}>{account.hash}</option>
+                                    ))}
+                                </NativeSelect>
+                            </FormControl>
+                        </ListItem>
+                        <ListItem>
+                            <TextField style={{width: "100%", backgroundColor: "white"}} id="filled-basic"
+                                       label="ETH amount" variant="filled" onChange={this.handleAmountChange}/>
+                        </ListItem>
+                        <ListItem>
+                            <Button onClick={this.handleSendClick} style={{width: "100%"}}
+                                    variant="contained">Send</Button>
+                        </ListItem>
+                    </List>
+                </form>
+            </div>
         );
     }
 }
+
 export default SendMenu;

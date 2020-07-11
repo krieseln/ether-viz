@@ -40,10 +40,10 @@ class BlockchainCanvas extends React.Component {
         let latestBlock = await web3.eth.getBlockNumber();
         this.setState({latestBlockNumber: latestBlock});
         let blocksAway = 0;
-        if (latestBlock <= 3) {
+        if (latestBlock <= 2) {
             blocksAway = latestBlock;
         } else {
-            blocksAway = 3;
+            blocksAway = 2;
         }
         const blockArray = [];
         const blockHashesArray = [];
@@ -54,7 +54,7 @@ class BlockchainCanvas extends React.Component {
         const pendingBlock = await web3.eth.getBlock("pending");
 
         if (pendingBlock.number > blockArray[0].number) {
-            blockArray.push(pendingBlock);
+            blockArray.unshift(pendingBlock);
         }
 
         this.setState({blocks: blockArray, blockHashes: blockHashesArray});
@@ -73,19 +73,23 @@ class BlockchainCanvas extends React.Component {
 
     render() {
         const {blocks, latestBlockNumber, className} = this.state;
-        const zIndex = -1;
+        const zIndex = 0;
         return (
             <div
                 className={className}
                 onClick={(event) => this.blurCanvas(event)}
             >
                 <div >
-                    {blocks.map(block => (<Block blockInfo={block} latestBlockNumber={latestBlockNumber}/>))}
+                    {blocks.map(block => (<Block zIndex={1} blockInfo={block} latestBlockNumber={latestBlockNumber}/>))}
                 </div>
                 <div className="blocklines">
                     {blocks.map((block, index) => (
-                        <SteppedLineTo id="steppedlineto" borderColor={"black"}
+                        <SteppedLineTo id="steppedlineto"
+                                       borderColor={"grey"}
+                                       borderWidth= {3}
                                        from={(block.hash) ? "hash_" + block.hash : "hash_empty"}
+                                       toAnchor="bottom right"
+                                       fromAnchor="bottom left"
                                        to={"parenthash_" + block.hash} zIndex={zIndex}/>
                     ))}
                 </div>
