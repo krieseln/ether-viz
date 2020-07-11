@@ -96,7 +96,7 @@ class SendMenu extends React.Component {
             >
                 <form id="setTransactionDetailsForm">
                     <List>
-                        <ListSubheader style={{fontSize: "large", fontStyle: "bold"}}>send ETH</ListSubheader>
+                        <ListSubheader className="headline">SEND ETH</ListSubheader>
                         <ListItem>
                             <FormControl>
                                 <InputLabel htmlFor="from-selection">From</InputLabel>

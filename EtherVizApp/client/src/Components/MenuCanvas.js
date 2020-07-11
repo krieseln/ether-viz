@@ -46,7 +46,7 @@ class MenuCanvas extends React.Component {
                 onClick={(event) => this.blurCanvas(event)}
             >
                 <List>
-                    <ListSubheader>Accounts</ListSubheader>
+                    <ListSubheader className="headline">ACCOUNTS</ListSubheader>
                     <ListItem key="currentAccount">
                         <ListItemText
                             primary={"..." + currentAccount.substr(currentAccount.length - 6, currentAccount.length)}/>

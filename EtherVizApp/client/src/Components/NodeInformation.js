@@ -7,7 +7,7 @@ class NodeInformation extends React.Component{
         this.state = {
             selectedNode: props.selectedNode,
             blur: true,
-            className: "transactionfeed blurry"
+            className: "nodeinfocanvas blurry"
 
         }
     }
@@ -20,10 +20,10 @@ class NodeInformation extends React.Component{
 
     blurCanvas = (event) => {
         console.log(event.target.className)
-        if (event.target.className.includes("transactionfeed")) {
+        if (event.target.className.includes("nodeinfocanvas")) {
             this.setState({
                 blur: (!this.state.blur),
-                className: this.state.blur ? "transactionfeed" : "transactionfeed blurry"
+                className: this.state.blur ? "nodeinfocanvas" : "nodeinfocanvas blurry"
             })
         }
     };

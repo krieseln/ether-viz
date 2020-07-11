@@ -10,7 +10,7 @@ class SmartContractCanvas extends React.Component {
             insurance: false,
 
             blur: true,
-            className: "miningpoolcanvas"
+            className: "smartcontractcanvas"
 
         }
     }
@@ -25,10 +25,10 @@ class SmartContractCanvas extends React.Component {
 
 
     blurCanvas = (event) => {
-        if (event.target.className.includes("miningpoolcanvas")) {
+        if (event.target.className.includes("smartcontractcanvas")) {
             this.setState({
                 blur: !this.state.blur,
-                className: this.state.blur ? "miningpoolcanvas" : "miningpoolcanvas blurry"
+                className: this.state.blur ? "smartcontractcanvas" : "smartcontractcanvas blurry"
             })
         }
     };
@@ -39,7 +39,7 @@ class SmartContractCanvas extends React.Component {
         return (
             <div className={this.state.className} onClick={(event) => this.blurCanvas(event)}>
                 <div>
-                    <p>Smart Contract</p>
+                    <p className="headline">CONTRACT CONTENT</p>
                     <table align="left">
                         <tr>
                             <th>Owner</th>

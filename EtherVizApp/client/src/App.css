@@ -3,9 +3,9 @@
 }
 
 :root {
-    --maincolor: #f4f4f4;
-    --secondarycolor: rgba(7, 7, 7, 0.3);
-    --tertiarycolor: #e4decd;
+    --maincolor: #FFFFFF;
+    --secondarycolor: #ecf0f1;
+    --tertiarycolor:  #3c3c3d;
 
 }
 
@@ -37,11 +37,11 @@
 
     display: grid;
     grid-template-columns: 15% 70% 15%;
-    grid-template-rows: 55% 5% 40%;
+    grid-template-rows: 57% 3% 40%;
     grid-template-areas:
             "menucanvas graphcanvas infocanvas"
-            "menucanvas transactionfeed infocanvas"
-            "sendmenucanvas blockchaincanvas miningpoolcanvas"
+            "menucanvas nodeinfocanvas infocanvas"
+            "sendmenucanvas blockchaincanvas smartcontractcanvas"
 }
 
 
@@ -73,33 +73,33 @@ g#graphcanvas-id-graph-container-zoomable {
     filter: blur(5px)
 }
 
-.transactionfeed{
+.nodeinfocanvas{
     background-color: var(--maincolor);
-    border: 1px solid var(--secondarycolor);
-    grid-area: transactionfeed;
+    grid-area: nodeinfocanvas;
+    border-left: 1px solid var(--secondarycolor);
+    border-right: 1px solid var(--secondarycolor);
+
 }
 
 .graphcanvas {
     background-color: var(--maincolor);
-    border: 1px solid var(--secondarycolor);
+    border-left: 1px solid var(--secondarycolor);
+    border-right: 1px solid var(--secondarycolor);
     grid-area: graphcanvas;
 }
 
 .menucanvas {
     background-color: var(--maincolor);
-    border: 1px solid var(--secondarycolor);
     grid-area: menucanvas;
 }
 
 .sendmenucanvas {
     background-color: var(--maincolor);
-    border: 1px solid var(--secondarycolor);
     grid-area: sendmenucanvas;
 }
 
 .infocanvas {
     background-color: var(--maincolor);
-    border: 1px solid var(--secondarycolor);
     grid-area: infocanvas;
 }
 
@@ -109,13 +109,23 @@ g#graphcanvas-id-graph-container-zoomable {
     grid-area: blockchaincanvas;
 }
 
-.miningpoolcanvas {
+.smartcontractcanvas {
     background-color: var(--maincolor);
-    border: 1px solid var(--secondarycolor);
-    grid-area: miningpoolcanvas;
+    grid-area: smartcontractcanvas;
 }
 
 .block {
     margin: 50px 0 0 20px;
     display: inline-flex;
+}
+
+.headline {
+    font-size: 18px !important;
+    color: var(--tertiarycolor) !important;
+}
+
+table, th, td {
+    font-size: 14px !important;
+    color: var(--tertiarycolor) !important;
+    font-style: normal !important;
 }
