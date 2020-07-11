@@ -24,7 +24,7 @@ class SendMenu extends React.Component {
             amount: null,
             transactionSent: false,
             blur: true,
-            className: "sendmenucanvas "
+            className: "sendmenucanvas blurry"
         }
     }
 

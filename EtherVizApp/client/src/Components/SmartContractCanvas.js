@@ -10,7 +10,7 @@ class SmartContractCanvas extends React.Component {
             insurance: false,
 
             blur: true,
-            className: "smartcontractcanvas"
+            className: "smartcontractcanvas blurry"
 
         }
     }
