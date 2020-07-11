@@ -1,16 +1,28 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-class MiningPoolCanvas extends React.Component {
+class SmartContractCanvas extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            contractOwner: props.contractOwner,
+            insurance: false,
+
             blur: true,
             className: "miningpoolcanvas"
 
         }
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.contractOwner !== this.state.contractOwner) {
+            this.setState({contractOwner: this.props.contractOwner,
+                insurance: this.props.insurance
+            });
+        }
+    };
+
 
     blurCanvas = (event) => {
         if (event.target.className.includes("miningpoolcanvas")) {
@@ -22,20 +34,28 @@ class MiningPoolCanvas extends React.Component {
     };
 
     render() {
-
+        const {contractOwner, insurance} = this.state;
 
         return (
             <div className={this.state.className} onClick={(event) => this.blurCanvas(event)}>
                 <div>
                     <p>Smart Contract</p>
-                    <table>
+                    <table align="left">
                         <tr>
-                            <th>Owner:</th>
-                            <th>Jens</th>
+                            <th>Owner</th>
+                            <th>{contractOwner.toString().substr(contractOwner.length-6, contractOwner.length)}</th>
                         </tr>
                         <tr>
-                            <th>Value:</th>
+                            <th>Value</th>
                             <th>120 Eth</th>
+                        </tr>
+                        <tr>
+                            <th>Chassis number</th>
+                            <th>WB10A0400G</th>
+                        </tr>
+                        <tr>
+                            <th>Insurance</th>
+                            <th>{insurance ? "true" : "false"}</th>
                         </tr>
                     </table>
                 </div>
@@ -44,4 +64,4 @@ class MiningPoolCanvas extends React.Component {
     }
 }
 
-export default MiningPoolCanvas;
+export default SmartContractCanvas;

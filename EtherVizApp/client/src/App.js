@@ -6,7 +6,7 @@ import BlockchainCanvas from "./Components/BlockchainComponents/BlockchainCanvas
 import SendMenu from "./Components/SendMenu";
 import MenuCanvas from "./Components/MenuCanvas";
 import InfoCanvas from "./Components/InfoCanvas";
-import MiningPoolCanvas from "./Components/SmartContractCanvas";
+import SmartContractCanvas from "./Components/SmartContractCanvas";
 import GraphCanvas from "./Components/GraphCanvas";
 import NodeInformation from './Components/NodeInformation';
 
@@ -31,7 +31,10 @@ class App extends Component {
             nodeConvasData: null,
             selectedNode: null,
             selectedNodeAccounts: null,
-            accountsPerNode: null
+            accountsPerNode: null,
+
+            contractOwner: "0x8Cc5A1a0802DB41DB826C2FcB72423744338DcB0",
+            insurance: false,
         }
     }
 
@@ -89,7 +92,7 @@ class App extends Component {
 
             //UseCase: Buy Car from Seller. Notify State insurance to confirm transaction
 
-            const interessenten  = new Web3(miner3Provider);
+            const interessenten = new Web3(miner3Provider);
             const verkaufende = new Web3(miner1Provider);
             const staat = new Web3(node1Provider);
 
@@ -99,7 +102,11 @@ class App extends Component {
 
             //get accounts for each node
             for (let node of nodes) {
-                accountsPerNode.push({"name": node.name, "accounts": await node.instance.eth.getAccounts(), "alias": node.alias});
+                accountsPerNode.push({
+                    "name": node.name,
+                    "accounts": await node.instance.eth.getAccounts(),
+                    "alias": node.alias
+                });
             }
 
             //array with hex of all accounts. Used to have one list of all accounts.
@@ -168,8 +175,6 @@ class App extends Component {
     };
 
 
-
-
     //TESTDURCHLAUF für Contract
     runExample = async () => {
         const {contracts} = this.state;
@@ -212,6 +217,10 @@ class App extends Component {
         }
     };
 
+    changeContractOwner = (newOwner) => {
+        this.setState({contractOwner: newOwner, insurance: true})
+    };
+
 
 
     render() {
@@ -229,7 +238,7 @@ class App extends Component {
                     web3={this.state.selectedNode.instance}
                     toAccounts={this.state.accounts}
                     accounts={this.state.selectedNodeAccounts}
-                    handleOnAccountClick={this.handleOnAccountClick}
+                    changeContractOwner={this.changeContractOwner}
                 />
                 <GraphCanvas
                     data={this.state.nodeCanvasData}
@@ -241,7 +250,9 @@ class App extends Component {
                 <BlockchainCanvas
                     web3={this.state.selectedNode.instance}
                 />
-                <MiningPoolCanvas
+                <SmartContractCanvas
+                    contractOwner={this.state.contractOwner}
+                    insurance={this.state.insurance}
                 />
                 <InfoCanvas
                     web3={this.state.web3}

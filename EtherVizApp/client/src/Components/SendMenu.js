@@ -18,15 +18,13 @@ class SendMenu extends React.Component {
             web3: props.web3,
             accounts: props.accounts,
             toAccounts: props.toAccounts,
-            handleOnAccountClick: props.handleOnAccountClick,
+            changeContractOwner: props.changeContractOwner,
             from: null,
             to: null,
             amount: null,
             transactionSent: false,
             blur: true,
             className: "sendmenucanvas "
-
-
         }
     }
 
@@ -40,13 +38,17 @@ class SendMenu extends React.Component {
         //console.log("SendMenu componentDidUpdate", this.state.web3._provider.host);
     };
 
+
+
     handleSendClick = () => {
-        const {web3, from, to, amount} = this.state;
+        const {web3, from, to, amount, changeContractOwner} = this.state;
 
             console.log("handleSendClick", web3._provider);
-            sendEthereum(web3, from, to, amount);
-            console.log("handleSendClick", from, to, amount);
 
+            sendEthereum(web3, from, to, amount);
+
+            console.log("handleSendClick", from, to, amount);
+            changeContractOwner(from);
             //reset form
             document.getElementById("setTransactionDetailsForm").reset();
             this.setState({
@@ -54,18 +56,21 @@ class SendMenu extends React.Component {
                 to: '',
                 amount: ''
             });
+
+
     };
 
     handleFromChange = (event) => {
-        console.log("state changed");
+        console.log("state changed from", event.target.value);
         this.setState({from: event.target.value});
     };
     handleToChange = (event) => {
+        console.log("state changed to", event.target.value);
         this.setState({to: event.target.value});
     };
 
     handleAmountChange = (event) => {
-        this.setState({amount: event.target.value});
+        this.setState({amount: event.target.value * 1000000000000000000});
         console.log("amount changed to", event.target.value);
     };
 

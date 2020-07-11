@@ -9,7 +9,11 @@ class InfoCanvas extends React.Component {
         this.state = {
             web3: props.web3,
             contract: props.contract,
+
             currentAccount: props.currentAccount,
+            currentAccountBalance: null,
+            transactionCount: null,
+
             currentAccountInfo: [props.currentAccount],
             blur: true,
             className: "infocanvas blurry"
@@ -22,45 +26,32 @@ class InfoCanvas extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.currentAccount !== this.state.currentAccount) {
             this.setState({currentAccount: this.props.currentAccount});
-            this.getCurrentAccountInfo();
+            this.getCurrentAccountInfo(this.props.currentAccount);
         }
 
     };
 
     componentDidMount() {
-        this.getCurrentAccountInfo();
+        this.getCurrentAccountInfo(this.state.currentAccount);
     }
 
 
     //function to collect account infos
-    getCurrentAccountInfo = async () => {
-        const {web3, currentAccount} = this.state;
+    getCurrentAccountInfo = async (curAcc) => {
+        const {web3} = this.state;
+        let transactionCount = await web3.eth.getTransactionCount(curAcc);
+        let balance = 0;
 
-        let tmpcurrentAccountInfo = [];
-
-        let transactionCount = await web3.eth.getTransactionCount(currentAccount);
-        let accountBalance = null;
-        let storageAT = null;
-
-        await web3.eth.getStorageAt(currentAccount, 0).then(result => {
-            storageAT = web3.utils.hexToAscii(result);
-        });
-        await web3.eth.getBalance(currentAccount, function (error, wei) {
+        await web3.eth.getBalance(curAcc, function (error, wei) {
             if (!error) {
-                accountBalance = web3.utils.fromWei(wei, 'ether');
-                //console.log(wei)
-                //console.log(accountBalance)
+                balance = web3.utils.fromWei(wei, 'ether')
             }
         });
-        let contractCode = await web3.eth.getCode(currentAccount);
-
-        tmpcurrentAccountInfo.push(accountBalance);
-        tmpcurrentAccountInfo.push(transactionCount);
-        tmpcurrentAccountInfo.push(contractCode);
-        tmpcurrentAccountInfo.push(storageAT);
 
         this.setState({
-            currentAccountInfo: tmpcurrentAccountInfo
+            currentAccountBalance: balance,
+            transactionCount: transactionCount,
+
         });
     };
 
@@ -74,20 +65,22 @@ class InfoCanvas extends React.Component {
     };
 
     render() {
-        const {currentAccount, currentAccountInfo, className} = this.state;
-        //console.log(currentAccountInfo)
+        const {currentAccount, className} = this.state;
 
         return (
             <div className={className}
-                onClick={(event) => this.blurCanvas(event)}
+                 onClick={(event) => this.blurCanvas(event)}
             >
                 <h2>Account Info</h2>
                 <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
-                   Account-Hash: {currentAccount.substr(currentAccount.length - 6, currentAccount.length)}
+                    Account-Hash: {currentAccount.substr(currentAccount.length - 6, currentAccount.length)}
                 </Box>
-                {currentAccountInfo.map(detail => (
-                    <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">{detail}</Box>))}
-
+                <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
+                    Balance: {this.state.currentAccountBalance}
+                </Box>
+                <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
+                    Transaction Count: {this.state.transactionCount}
+                </Box>
             </div>
         );
     }
